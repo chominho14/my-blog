@@ -1,22 +1,17 @@
 import Link from "next/link";
-import { useState } from "react";
-
-function cls(...classnames: string[]) {
-  return classnames.join(" ");
-}
 
 export default function Enter() {
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-3xl font-bold text-center">로그인</h3>
+      <h3 className="text-3xl font-bold text-center">회원가입</h3>
       <div className="mt-12">
         <div className="flex flex-col items-center">
           <h5 className="text-sm text-gray-500 font-medium pb-5">
-            조민호의 기술블로그 로그인하기
+            조민호의 기술블로그 함께하기
           </h5>
         </div>
         <form className="flex flex-col mt-8">
-          <label className="text-sm font-medium text-gray-700">이메일</label>
+          <label className="text-sm font-medium text-gray-700">이름</label>
           <input
             type="email"
             className="mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
@@ -24,7 +19,7 @@ export default function Enter() {
           />
 
           <label className="mt-4 text-sm font-medium text-gray-700">
-            비밀번호
+            이메일 주소
           </label>
           <input
             type="password"
@@ -32,8 +27,19 @@ export default function Enter() {
             required
           />
 
+          <label className="mt-4 text-sm font-medium text-gray-700">
+            비밀번호 (영문,숫자 조합 6자리 이상)
+          </label>
+          <input
+            type="password"
+            className="mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
+            required
+          />
+          {/* {영문 숫자 5자리 이상 정규식
+            /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$]/;
+            } */}
           <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
-            로그인
+            회원가입
           </button>
         </form>
         <div className="mt-8">
@@ -77,11 +83,11 @@ export default function Enter() {
           </div>
           <div className="relative -bottom-5 text-center">
             <span className=" bg-white px-1 text-sm text-gray-500">
-              계정이 없으신가요?
+              이미 계정이 있으신가요?
             </span>
-            <Link href="/join">
+            <Link href="/login">
               <a className=" bg-white px-2 text-m text-black underline underline-offset-1 hover:text-red-500">
-                회원가입
+                로그인
               </a>
             </Link>
           </div>
