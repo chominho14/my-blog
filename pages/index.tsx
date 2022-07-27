@@ -1,36 +1,35 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const handleSearchClick = () => {
-    window.location.href = "/";
-  };
   const handleQuestionMoreClick = () => {
     window.location.href = "/";
   };
   return (
     <div className=" mt-20 px-4">
-      <button
-        className="bg-slate-200 w-full my-2 py-2 px-3 rounded-md"
-        onClick={handleSearchClick}
-      >
-        <div className="flex">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <div className="text-gray-400">기술블로그에서 검색하기.</div>
-        </div>
-      </button>
+      <div>
+        <Link href="/search">
+          <a className=" flex justify-start bg-slate-200 w-full px-3 py-2 rounded-md cursor-pointer">
+            <div className="flex">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <div className="text-gray-400">기술블로그에서 검색하기.</div>
+            </div>
+          </a>
+        </Link>
+      </div>
       <div className="h-20 w-20 bg-slate-200 mt-3  "></div>
       <h1 className="text-black py-4 text-2xl">조민호의 기술블로그</h1>
       <div className="text-xl text-blue-500 flex">
@@ -99,24 +98,23 @@ const Home: NextPage = () => {
           />
         </svg>
         <div className="px-2 text-blue-500">Q & A - 궁금한 것</div>
-        <button
-          className="text-sm absolute right-10 flex text-red-400 mt-1"
-          onClick={handleQuestionMoreClick}
-        >
-          <div>더보기</div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
+        <Link href="/community">
+          <a className="text-sm absolute right-10 flex text-red-400 mt-1">
+            <div>더보기</div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </a>
+        </Link>
       </div>
       <div className="h-40 py-3 flex whitespace-nowrap overflow-x-auto">
         {[...Array(5)].map((_, i) => (

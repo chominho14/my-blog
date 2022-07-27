@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Enter() {
+export default function Join() {
   return (
     <div className="mt-16 px-4">
       <h3 className="text-3xl font-bold text-center">회원가입</h3>
