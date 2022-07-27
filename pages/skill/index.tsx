@@ -3,6 +3,9 @@ import type { NextPage } from "next";
 const Skill: NextPage = () => {
   return (
     <div className="flex flex-col space-y-5 py-10">
+      <div className="bg-slate-300 py-20 flex justify-center">
+        개발자가 되기 위한 노력 (사진)
+      </div>
       <div className="px-4">전체 항목</div>
       {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
         <div
@@ -13,8 +16,6 @@ const Skill: NextPage = () => {
             <div className="pt-2 flex flex-col">
               <div className="flex space-x-2 text-xs">
                 <div>jul.27.2022</div>
-                <div>조민호</div>
-                <div className="rounded-full bg-slate-200 w-5 h-5" />
               </div>
               <h2 className="text-xl font-bold text-gray-900">제목</h2>
               <span className="text-xs text-gray-500">부제목</span>
