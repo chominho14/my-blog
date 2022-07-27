@@ -3,83 +3,103 @@ import Link from "next/link";
 export default function Enter() {
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-3xl font-bold text-center">로그인</h3>
-      <div className="mt-12">
-        <div className="flex flex-col items-center">
-          <h5 className="text-sm text-gray-500 font-medium pb-5">
-            조민호의 기술블로그 로그인하기
-          </h5>
-        </div>
-        <form className="flex flex-col mt-8">
-          <label className="text-sm font-medium text-gray-700">이메일</label>
-          <input
-            type="email"
-            className="mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
-            required
-          />
-
-          <label className="mt-4 text-sm font-medium text-gray-700">
-            비밀번호
-          </label>
-          <input
-            type="password"
-            className="mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
-            required
-          />
-
-          <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
-            로그인
-          </button>
-        </form>
-        <div className="mt-8">
-          <div className="relative">
-            <div className="absolute w-full border-t border-gray-300" />
-            <div className="relative -top-3 text-center">
-              <span className=" bg-white px-2 text-sm text-gray-500">또는</span>
+      <div className="flex justify-center space-x-1">
+        <input
+          type="text"
+          className="transition hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-400 focus:border-red-400"
+          required
+          placeholder="조민호 블로그에서 궁금한 것을 검색해보세요."
+        />
+        <button className="transition px-3 bg-red-200 rounded-lg mt-2 hover:bg-red-400">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div className="py-4 mt-4 px-2">
+        <div>인기 검색어</div>
+        <div className="flex flex-col space-y-5 py-10">
+          <div className="px-4 text-xs text-gray-500">총 4개</div>
+          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
+            <div
+              key={i}
+              className="flex px-4  border-b pb-5 cursor-pointer justify-between"
+            >
+              <div className="flex space-x-4">
+                <div className="pt-2 flex flex-col">
+                  <div className="flex space-x-2 text-xs">
+                    <div>jul.27.2022</div>
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">제목</h2>
+                  <span className="text-xs text-gray-500">부제목</span>
+                </div>
+              </div>
+              <div className="flex space-x-2 items-end justify-end">
+                <div className="flex space-x-0.5 items-center text-sm  text-gray-600">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    ></path>
+                  </svg>
+                  <span>1</span>
+                </div>
+                <div className="flex space-x-0.5 items-center text-sm  text-gray-600">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                    ></path>
+                  </svg>
+                  <span>1</span>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3 mt-6">
-            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              카카오로 시작하기
-            </button>
-            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300">
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              깃허브로 시작하기
-            </button>
-          </div>
-          <div className="relative -bottom-5 text-center">
-            <span className=" bg-white px-1 text-sm text-gray-500">
-              계정이 없으신가요?
-            </span>
-            <Link href="/join">
-              <a className=" bg-white px-2 text-m text-black underline underline-offset-1 hover:text-red-500">
-                회원가입
-              </a>
-            </Link>
-          </div>
+          ))}
+          <button className="fixed hover:bg-red-500 transition-colors cursor-pointer  bottom-24 right-5 shadow-xl bg-red-400 rounded-full p-4 text-white">
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

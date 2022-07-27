@@ -2,14 +2,11 @@ import type { NextPage } from "next";
 import Link from "next/link";
 
 const Home: NextPage = () => {
-  const handleQuestionMoreClick = () => {
-    window.location.href = "/";
-  };
   return (
     <div className=" mt-20 px-4">
       <div>
         <Link href="/search">
-          <a className=" flex justify-start bg-slate-200 w-full px-3 py-2 rounded-md cursor-pointer">
+          <a className="hover:bg-slate-300 transition flex justify-start bg-slate-200 w-full px-3 py-2 rounded-md cursor-pointer">
             <div className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +29,7 @@ const Home: NextPage = () => {
       </div>
       <div className="h-20 w-20 bg-slate-200 mt-3  "></div>
       <h1 className="text-black py-4 text-2xl">조민호의 기술블로그</h1>
-      <div className="text-xl text-blue-500 flex">
+      <div className="text-xl text-red-400 flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -85,7 +82,7 @@ const Home: NextPage = () => {
       <div className="text-lg  flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-blue-500"
+          className="h-6 w-6 text-red-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -97,9 +94,9 @@ const Home: NextPage = () => {
             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <div className="px-2 text-blue-500">Q & A - 궁금한 것</div>
+        <div className="px-2 text-red-400">Q & A - 궁금한 것</div>
         <Link href="/community">
-          <a className="text-sm absolute right-10 flex text-red-400 mt-1">
+          <a className="hover:text-red-600 transition text-sm absolute right-10 flex text-red-400 mt-1">
             <div>더보기</div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
