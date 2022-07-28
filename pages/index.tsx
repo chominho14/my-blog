@@ -6,7 +6,7 @@ const Home: NextPage = () => {
     <div className=" mt-20 px-4">
       <div>
         <Link href="/search">
-          <a className="hover:bg-slate-300 transition flex justify-start bg-slate-200 w-full px-3 py-2 rounded-md cursor-pointer">
+          <a className="hover:bg-slate-300 transition flex justify-start bg-slate-200 w-full px-3 py-2 rounded-md cursor-pointer border-2 hover:border-gray-400">
             <div className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -113,10 +113,13 @@ const Home: NextPage = () => {
           </a>
         </Link>
       </div>
-      <div className="h-40 py-3 flex whitespace-nowrap overflow-x-auto">
+      <div className="h-40 py-3 flex whitespace-nowrap overflow-x-scroll scrollbar-hide snap-x">
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="rounded-lg mx-3 px-3 bg-slate-300  ">
-            <div className="w-40 flex flex-col items-center pt-5">
+          <div
+            key={i}
+            className="rounded-lg mx-3 px-3 bg-slate-200 snap-normal snap-center border-2 border-gray-300"
+          >
+            <div className="w-60 flex flex-col items-center pt-5">
               <div className="py-3">~~~이 궁금해요~</div>
               <div className="flex text-xs py-3 space-x-2">
                 <div>궁금해요 0</div>

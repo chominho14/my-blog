@@ -12,5 +12,5 @@ module.exports = {
   // 토글 버튼을 만들어 수동으로 만들고 싶다면(class)
   darkMode: "media",
   // form 들의 모양을 바꿔준다
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar-hide")],
 };

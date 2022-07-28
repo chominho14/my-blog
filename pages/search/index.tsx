@@ -10,7 +10,7 @@ export default function Enter() {
           required
           placeholder="조민호 블로그에서 궁금한 것을 검색해보세요."
         />
-        <button className="transition px-3 bg-red-200 rounded-lg mt-2 hover:bg-red-400">
+        <button className="transition px-3 bg-red-200 rounded-lg mt-2 hover:bg-red-400 border-2 border-red-300 focus:ring-2 focus:ring-offset-1 focus:ring-red-400 focus:outline-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 text-gray-400"
@@ -83,23 +83,6 @@ export default function Enter() {
               </div>
             </div>
           ))}
-          <button className="fixed hover:bg-red-500 transition-colors cursor-pointer  bottom-24 right-5 shadow-xl bg-red-400 rounded-full p-4 text-white">
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </div>

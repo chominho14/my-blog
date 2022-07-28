@@ -39,7 +39,7 @@ export default function Login() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 mt-6">
-            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300">
+            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:outline-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -54,7 +54,7 @@ export default function Login() {
               </svg>
               카카오로 시작하기
             </button>
-            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300">
+            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:outline-none">
               <svg
                 className="w-5 h-5"
                 aria-hidden="true"
