@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
 import Layout from "../../components/layout";
+import TextArea from "../../components/textarea";
 
 const Upload: NextPage = () => {
   return (
-    <Layout>
-      <div className="px-4 py-16">
+    <Layout canGoBack>
+      <div className="px-4">
         <div className="my-5">
           <label className="mb-1 block text-sm font-medium text-gray-700">
             제목
@@ -34,10 +35,7 @@ const Upload: NextPage = () => {
             기술 설명
           </label>
           <div>
-            <textarea
-              className="mt-1 shadow-sm w-full focus:ring-red-500 rounded-md border-gray-300 focus:border-red-500 hover:border-red-300"
-              rows={10}
-            />
+            <TextArea required placeholder="코드 설명을 입력해주세요." />
           </div>
         </div>
         <button className="mt-3 w-full bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none ">

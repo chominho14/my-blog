@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { cls } from "../libs/client/utils";
 
@@ -17,6 +18,10 @@ export default function Layout({
   children,
   hasFooter,
 }: LayoutProps) {
+  const router = useRouter();
+  const onClick = () => {
+    router.back();
+  };
   return (
     <div>
       {hasNavBar ? (
@@ -26,6 +31,26 @@ export default function Layout({
           </Link>
           <button className="border-2 px-2 py-1 rounded-lg border-gray-300 transition hover:bg-gray-400 ">
             로그인
+          </button>
+        </div>
+      ) : null}
+      {canGoBack ? (
+        <div className="bg-whilte w-full text-lg font-medium py-3 text-gray-700 border-b top-0 flex items-center justify-between px-6">
+          <button onClick={onClick}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
           </button>
         </div>
       ) : null}
