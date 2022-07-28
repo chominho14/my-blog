@@ -10,9 +10,9 @@ const Profile: NextPage = () => {
           <div className="w-16 h-16 bg-slate-500 rounded-full" />
           <div className="flex flex-col">
             <span className="font-medium text-gray-900">Username</span>
-            <span className="text-sm text-gray-700">
-              프로필 수정하기 &rarr;
-            </span>
+            <Link href="/profile/edit">
+              <a className="text-sm text-gray-700">프로필 수정하기 &rarr;</a>
+            </Link>
           </div>
         </div>
         <div className="mt-10 flex justify-around">

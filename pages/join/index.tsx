@@ -15,7 +15,7 @@ export default function Join() {
           <form className="flex flex-col mt-8">
             <label className="text-sm font-medium text-gray-700">이름</label>
             <input
-              type="email"
+              type="text"
               className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
               required
             />
@@ -24,7 +24,7 @@ export default function Join() {
               이메일 주소
             </label>
             <input
-              type="password"
+              type="email"
               className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
               required
             />
