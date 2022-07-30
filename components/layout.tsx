@@ -29,9 +29,19 @@ export default function Layout({
           <Link href="/">
             <a className="font-bold text-xl">SkillBlog</a>
           </Link>
-          <button className="border-2 px-2 py-1 rounded-lg border-gray-300 transition hover:bg-gray-400 ">
-            로그인
-          </button>
+          {/* 임의로 코드 구현 => 로그인이 된 유저는 로그인 버튼을 없앤다.
+            로그인이 되어있지 않은 유저는 일단 이렇게만 유지
+          */}
+          {router.pathname === "/" ||
+          router.pathname === "/skill" ||
+          router.pathname === "/community" ||
+          router.pathname === "/search" ? (
+            <Link href="/login">
+              <a className="border-2 px-2 py-1 rounded-lg border-gray-300 transition hover:bg-gray-400 ">
+                로그인
+              </a>
+            </Link>
+          ) : null}
         </div>
       ) : null}
       {canGoBack ? (
