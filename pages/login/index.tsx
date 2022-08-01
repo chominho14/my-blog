@@ -1,7 +1,20 @@
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import Input from "../../components/input";
 import Layout from "../../components/layout";
 
+interface LoginForm {
+  email?: string;
+  password?: string;
+}
+
 export default function Login() {
+  const { register, handleSubmit, reset } = useForm<LoginForm>();
+
+  const onValid = (data: LoginForm) => {
+    console.log(data);
+    reset();
+  };
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4  pb-32">
@@ -12,24 +25,26 @@ export default function Login() {
               조민호의 기술블로그 로그인하기
             </h5>
           </div>
-          <form className="flex flex-col mt-8">
-            <label className="text-sm font-medium text-gray-700">이메일</label>
-            <input
+          <form
+            onSubmit={handleSubmit(onValid)}
+            className="flex flex-col mt-8 space-y-4"
+          >
+            <Input
+              register={register("email")}
+              required
+              label="이메일"
+              name="email"
               type="email"
-              className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
-              required
             />
-
-            <label className=" mt-4 text-sm font-medium text-gray-700">
-              비밀번호
-            </label>
-            <input
+            <Input
+              register={register("password")}
+              required
+              label="비밀번호"
+              name="password"
               type="password"
-              className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
-              required
             />
 
-            <button className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
+            <button className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-16">
               로그인
             </button>
           </form>

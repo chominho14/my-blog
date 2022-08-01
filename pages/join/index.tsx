@@ -1,7 +1,36 @@
 import Link from "next/link";
+import { FieldErrors, useForm } from "react-hook-form";
 import Layout from "../../components/layout";
 
+interface JoinForm {
+  name: string;
+  email: string;
+  password: string;
+  errors: string;
+}
+
 export default function Join() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    reset,
+  } = useForm<JoinForm>({
+    mode: "onChange",
+  });
+
+  const onValid = (data: JoinForm) => {
+    console.log("hi");
+    setError("errors", { message: "서버에 문제가 있습니다." });
+    reset();
+  };
+
+  // use-hook-form 은 error가 field하나에서 한 번에 하나씩 작동하므로 동시 처리가 불가능
+  // const specialCharRegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+  // const numberRegExp = /[0-9]/g;
+  // const charRegExp = /[a-zA-Z]/;
+  console.log(errors);
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4 pb-32">
@@ -12,34 +41,56 @@ export default function Join() {
               조민호의 기술블로그 함께하기
             </h5>
           </div>
-          <form className="flex flex-col mt-8">
+          <form onSubmit={handleSubmit(onValid)} className="flex flex-col mt-8">
             <label className="text-sm font-medium text-gray-700">이름</label>
             <input
+              {...register("name", {
+                required: "유저이름을 입력해 주세요.",
+              })}
               type="text"
               className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
               required
             />
-
+            <span className="text-sm text-gray-400 p-1">
+              {errors.name?.message}
+            </span>
             <label className="mt-4 text-sm font-medium text-gray-700">
               이메일 주소
             </label>
             <input
+              {...register("email", {
+                required: "이메일을 입력해 주세요.",
+              })}
               type="email"
               className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
               required
             />
-
+            <span className="text-sm text-gray-400 p-1">
+              {errors.email?.message}
+            </span>
             <label className="mt-4 text-sm font-medium text-gray-700">
               비밀번호 (영문,숫자 조합 6자리 이상)
             </label>
             <input
+              {...register("password", {
+                required: "비밀번호를 입력해 주세요.",
+                pattern: {
+                  message:
+                    "비밀번호는 특수문자, 영문, 숫자를 섞어 8자리 이상으로 만들어 주세요.",
+                  value:
+                    /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+                },
+              })}
               type="password"
               className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
               required
             />
-            {/* {영문 숫자 5자리 이상 정규식
-          /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$]/;
-          } */}
+            <span className="text-sm text-gray-400 p-1">
+              {errors.password?.message}
+            </span>
+            <span className="text-sm text-gray-400 p-1">
+              {errors.errors?.message}
+            </span>
             <button className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
               회원가입
             </button>

@@ -1,10 +1,12 @@
+import { UseFormRegisterReturn } from "react-hook-form";
+
 interface InputProps {
   label: string;
   name: string;
   type: string;
-  required: boolean;
   kind?: "text" | "email" | "password";
-  [key: string]: any;
+  required: boolean;
+  register: UseFormRegisterReturn;
 }
 
 export default function Input({
@@ -12,8 +14,8 @@ export default function Input({
   name,
   type,
   kind = "text",
+  register,
   required,
-  ...rest
 }: InputProps) {
   return (
     <div>
@@ -24,23 +26,29 @@ export default function Input({
         <input
           id={name}
           //   autoComplete="off"
-          {...rest}
+          type={type}
+          required={required}
+          {...register}
           className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
         />
       ) : null}
       {kind === "text" ? (
         <input
           id={name}
-          autoComplete="off"
-          {...rest}
+          // autoComplete="off"
+          type={type}
+          required={required}
+          {...register}
           className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
         />
       ) : null}
       {kind === "password" ? (
         <input
           id={name}
-          autoComplete="off"
-          {...rest}
+          // autoComplete="off"
+          type={type}
+          required={required}
+          {...register}
           className="hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-300 focus:border-red-300"
         />
       ) : null}
