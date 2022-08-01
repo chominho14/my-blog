@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import Layout from "../../components/layout";
+import useMutation from "../../libs/client/useMutation";
 
 interface JoinForm {
   name: string;
@@ -20,8 +22,10 @@ export default function Join() {
     mode: "onChange",
   });
 
+  const [join, { loading, data, error }] = useMutation("/api/users/join");
+
   const onValid = (data: JoinForm) => {
-    console.log("hi");
+    join(data);
     setError("errors", { message: "서버에 문제가 있습니다." });
     reset();
   };
@@ -30,7 +34,7 @@ export default function Join() {
   // const specialCharRegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
   // const numberRegExp = /[0-9]/g;
   // const charRegExp = /[a-zA-Z]/;
-  console.log(errors);
+  console.log(loading, data, error);
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4 pb-32">
