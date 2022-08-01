@@ -1,6 +1,6 @@
+import Layout from "@components/layout";
+import { cls } from "@libs/client/utils";
 import type { NextPage } from "next";
-import Layout from "../../components/layout";
-import { cls } from "../../libs/client/utils";
 
 const SkillDetail: NextPage = () => {
   const fakeLuvData = true;

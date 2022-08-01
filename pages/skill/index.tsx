@@ -1,8 +1,7 @@
+import FloatingButton from "@components/floating-button";
+import Layout from "@components/layout";
+import SkillItem from "@components/skill-item";
 import type { NextPage } from "next";
-import FloatingButton from "../../components/floating-button";
-import Layout from "../../components/layout";
-import SkillItem from "../../components/skill-item";
-
 const Skill: NextPage = () => {
   return (
     <Layout hasNavBar hasTabBar hasFooter>

@@ -1,7 +1,7 @@
+import Input from "@components/input";
+import Layout from "@components/layout";
 import { NextPage } from "next";
 import { useForm } from "react-hook-form";
-import Input from "../../components/input";
-import Layout from "../../components/layout";
 
 interface EditForm {
   name: string;

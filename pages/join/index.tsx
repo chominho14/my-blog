@@ -1,8 +1,7 @@
+import Layout from "@components/layout";
+import useMutation from "@libs/client/useMutation";
 import Link from "next/link";
-import { useState } from "react";
-import { FieldErrors, useForm } from "react-hook-form";
-import Layout from "../../components/layout";
-import useMutation from "../../libs/client/useMutation";
+import { useForm } from "react-hook-form";
 
 interface JoinForm {
   name: string;

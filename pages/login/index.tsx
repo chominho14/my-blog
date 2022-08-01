@@ -1,7 +1,7 @@
+import Input from "@components/input";
+import Layout from "@components/layout";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import Input from "../../components/input";
-import Layout from "../../components/layout";
 
 interface LoginForm {
   email?: string;

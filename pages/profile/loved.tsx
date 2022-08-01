@@ -1,6 +1,6 @@
+import Layout from "@components/layout";
+import SkillItem from "@components/skill-item";
 import type { NextPage } from "next";
-import Layout from "../../components/layout";
-import SkillItem from "../../components/skill-item";
 
 const ProfileLoved: NextPage = () => {
   return (
