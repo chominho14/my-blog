@@ -96,7 +96,7 @@ export default function Join() {
               {errors.errors?.message}
             </span>
             <button className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
-              회원가입
+              {loading ? "처리 중..." : "회원가입"}
             </button>
           </form>
           <div className="mt-8">
