@@ -38,4 +38,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 // withHandler를 사용함으로써 우리의 api 파일을 사용자가 볼 수 없게 만들어 준다.
-export default withApiSession(withHandler("POST", handler));
+export default withApiSession({ methods: ["POST"], handler, isPrivate: false });

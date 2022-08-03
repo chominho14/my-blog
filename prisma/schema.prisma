@@ -18,7 +18,7 @@ datasource db {
 model User {
   id         Int      @id @default(autoincrement())
   socialOnly Boolean  @default(false)
-  phone      Int?     @unique
+  phone      String?  @unique
   email      String   @unique
   name       String
   avatar     String?

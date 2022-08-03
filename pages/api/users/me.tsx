@@ -18,4 +18,6 @@ async function handler(
 }
 
 // withHandler를 사용함으로써 우리의 api 파일을 사용자가 볼 수 없게 만들어 준다.
-export default withApiSession(withHandler("GET", handler));
+export default withApiSession(
+  withHandler({ methods: ["GET"], handler, isPrivate: false })
+);
