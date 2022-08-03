@@ -33,7 +33,7 @@ async function handler(
       console.error(error);
       return res.json({
         ok: false,
-        error: "계정을 만들 수 없습니다.",
+        error: "로그인 에러",
       });
     }
   }

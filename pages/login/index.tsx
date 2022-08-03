@@ -3,36 +3,44 @@ import Layout from "@components/layout";
 import useMutation from "@libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface LoginForm {
   email?: string;
   password?: string;
-  errors: string;
+  result?: string;
 }
 
 interface MutationResult {
   ok: boolean;
+  error?: string;
 }
 
 export default function Login() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    reset,
     setError,
     formState: { errors },
   } = useForm<LoginForm>();
-  const [login, { loading, data, error }] =
+  const [login, { loading, data }] =
     useMutation<MutationResult>("/api/users/login");
 
-  const router = useRouter();
   const onValid = (data: LoginForm) => {
-    login(data);
-    setError("errors", { message: "서버에 문제가 있습니다." });
-    router.push("/");
-    reset();
+    if (loading) return;
+    login({ ...data });
   };
+
+  useEffect(() => {
+    if (data?.ok) {
+      if (loading) return;
+      router.push("/");
+    } else if (!data?.ok && data?.error) {
+      setError("result", { message: data?.error });
+    }
+  }, [data, router, loading, setError]);
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4  pb-32">
@@ -59,7 +67,7 @@ export default function Login() {
               type="password"
             />
             <span className="text-sm text-gray-400 p-1">
-              {errors.errors?.message}
+              {errors.result?.message}
             </span>
             <button className="mt-8 bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none">
               {loading ? "처리 중..." : "로그인"}

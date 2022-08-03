@@ -2,26 +2,29 @@ import Layout from "@components/layout";
 import useMutation from "@libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface JoinForm {
   name: string;
   email: string;
   password: string;
-  errors: string;
+  result: string;
 }
 
 interface MutationResult {
   ok: boolean;
+  error?: string;
 }
 
 export default function Join() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
-    reset,
+    getValues,
   } = useForm<JoinForm>({
     mode: "onChange",
   });
@@ -29,13 +32,18 @@ export default function Join() {
   const [join, { loading, data, error }] =
     useMutation<MutationResult>("/api/users/join");
 
-  const router = useRouter();
   const onValid = (data: JoinForm) => {
     if (loading) return;
-    join(data);
-    setError("errors", { message: "서버에 문제가 있습니다." });
-    router.push("/login");
+    join({ ...data });
   };
+  useEffect(() => {
+    if (data?.ok) {
+      router.push("/login");
+    }
+    if (data?.error) {
+      setError("result", { message: data?.error });
+    }
+  }, [data, router, getValues, setError]);
 
   // use-hook-form 은 error가 field하나에서 한 번에 하나씩 작동하므로 동시 처리가 불가능
   // const specialCharRegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
@@ -100,7 +108,7 @@ export default function Join() {
               {errors.password?.message}
             </span>
             <span className="text-sm text-gray-400 p-1">
-              {errors.errors?.message}
+              {errors.result?.message}
             </span>
             <button className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
               {loading ? "처리 중..." : "회원가입"}
