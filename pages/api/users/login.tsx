@@ -2,7 +2,7 @@ import client from "@libs/server/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "../../../libs/server/withHandler";
 import bcrypt from "bcryptjs";
-import { withIronSessionApiRoute } from "iron-session/next";
+import { withApiSession } from "@libs/server/withSession";
 
 async function handler(
   req: NextApiRequest,
@@ -40,8 +40,4 @@ async function handler(
 }
 
 // withHandler를 사용함으로써 우리의 api 파일을 사용자가 볼 수 없게 만들어 준다.
-export default withIronSessionApiRoute(withHandler("POST", handler), {
-  cookieName: "skillblogsession",
-  password:
-    "1231231afsefasefsaefsefsefasefasef23123123123123123123123123123123123123",
-});
+export default withApiSession(withHandler("POST", handler));
