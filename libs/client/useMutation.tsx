@@ -10,15 +10,17 @@ import { useState } from "react";
 
 // 그러기 위해 useMutation을 사용한 곳에서 url을 받는다. (mutate하는 페이지 위치)
 
-interface UseMutationState {
+interface UseMutationState<T> {
   loading: boolean;
-  data?: object;
+  data?: T;
   error?: object;
 }
 
-type UseMutationResult = [(data: any) => void, UseMutationState];
+type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
 
-export default function useMutation(url: string): UseMutationResult {
+export default function useMutation<T = any>(
+  url: string
+): UseMutationResult<T> {
   const [state, setState] = useState({
     loading: false,
     data: undefined,

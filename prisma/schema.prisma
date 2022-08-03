@@ -22,7 +22,7 @@ model User {
   email      String   @unique
   name       String
   avatar     String?
-  password   String?
+  password   String
   region     String?  @default("korea")
   isAdmin    Boolean  @default(false)
   createdAt  DateTime @default(now())

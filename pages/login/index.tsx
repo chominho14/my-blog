@@ -1,18 +1,36 @@
 import Input from "@components/input";
 import Layout from "@components/layout";
+import useMutation from "@libs/client/useMutation";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 interface LoginForm {
   email?: string;
   password?: string;
+  errors: string;
+}
+
+interface MutationResult {
+  ok: boolean;
 }
 
 export default function Login() {
-  const { register, handleSubmit, reset } = useForm<LoginForm>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors },
+  } = useForm<LoginForm>();
+  const [login, { loading, data, error }] =
+    useMutation<MutationResult>("/api/users/login");
 
+  const router = useRouter();
   const onValid = (data: LoginForm) => {
-    console.log(data);
+    login(data);
+    setError("errors", { message: "서버에 문제가 있습니다." });
+    router.push("/");
     reset();
   };
   return (
@@ -25,10 +43,7 @@ export default function Login() {
               조민호의 기술블로그 로그인하기
             </h5>
           </div>
-          <form
-            onSubmit={handleSubmit(onValid)}
-            className="flex flex-col mt-8 space-y-4"
-          >
+          <form onSubmit={handleSubmit(onValid)} className="flex flex-col mt-8">
             <Input
               register={register("email")}
               required
@@ -43,9 +58,11 @@ export default function Login() {
               name="password"
               type="password"
             />
-
-            <button className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-16">
-              로그인
+            <span className="text-sm text-gray-400 p-1">
+              {errors.errors?.message}
+            </span>
+            <button className="mt-8 bg-red-400 hover:bg-red-500 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none">
+              {loading ? "처리 중..." : "로그인"}
             </button>
           </form>
           <div className="mt-8">

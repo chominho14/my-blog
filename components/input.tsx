@@ -18,7 +18,7 @@ export default function Input({
   required,
 }: InputProps) {
   return (
-    <div>
+    <div className="mb-4">
       <label className="mt-4 text-sm font-medium text-gray-700" htmlFor={name}>
         {label}
       </label>

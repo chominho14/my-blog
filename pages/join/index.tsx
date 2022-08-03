@@ -1,6 +1,7 @@
 import Layout from "@components/layout";
 import useMutation from "@libs/client/useMutation";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 interface JoinForm {
@@ -8,6 +9,10 @@ interface JoinForm {
   email: string;
   password: string;
   errors: string;
+}
+
+interface MutationResult {
+  ok: boolean;
 }
 
 export default function Join() {
@@ -21,12 +26,15 @@ export default function Join() {
     mode: "onChange",
   });
 
-  const [join, { loading, data, error }] = useMutation("/api/users/join");
+  const [join, { loading, data, error }] =
+    useMutation<MutationResult>("/api/users/join");
 
+  const router = useRouter();
   const onValid = (data: JoinForm) => {
+    if (loading) return;
     join(data);
     setError("errors", { message: "서버에 문제가 있습니다." });
-    reset();
+    router.push("/login");
   };
 
   // use-hook-form 은 error가 field하나에서 한 번에 하나씩 작동하므로 동시 처리가 불가능
