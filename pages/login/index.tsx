@@ -23,6 +23,7 @@ export default function Login() {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useForm<LoginForm>();
   const [login, { loading, data }] =
@@ -32,7 +33,7 @@ export default function Login() {
     if (loading) return;
     login({ ...data });
   };
-
+  console.log(data);
   useEffect(() => {
     if (data?.ok) {
       if (loading) return;

@@ -1,9 +1,12 @@
+import { fetchUsers } from "@libs/client/api";
 import useMe from "@libs/client/useMe";
 import useUser from "@libs/client/useUser";
 import { cls } from "@libs/client/utils";
+import { User } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useQuery } from "react-query";
 
 interface LayoutProps {
   canGoBack?: boolean;
@@ -12,6 +15,11 @@ interface LayoutProps {
   hasFooter?: boolean;
   hasLogin?: boolean;
   children: React.ReactNode;
+}
+
+interface UsersResponse {
+  ok: boolean;
+  user: User;
 }
 
 export default function Layout({
@@ -28,6 +36,11 @@ export default function Layout({
     router.back();
   };
   const user2 = useUser();
+
+  const { isLoading, data: userData } = useQuery<UsersResponse>(
+    "users",
+    fetchUsers
+  );
   return (
     <div>
       {hasNavBar ? (
@@ -38,7 +51,7 @@ export default function Layout({
           {/* 임의로 코드 구현 => 로그인이 된 유저는 로그인 버튼을 없앤다.
             로그인이 되어있지 않은 유저는 일단 이렇게만 유지
           */}
-          {user ? null : router.pathname === "/" ||
+          {userData?.ok == true ? null : router.pathname === "/" ||
             router.pathname === "/skill" ||
             router.pathname === "/community" ||
             router.pathname === "/search" ? (

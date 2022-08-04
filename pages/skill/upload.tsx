@@ -30,9 +30,10 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/sill/${data?.skill.id}`);
+      router.replace(`/skill/${data.skill.id}`);
     }
   }, [data, router]);
+
   return (
     <Layout canGoBack>
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-6">

@@ -1,5 +1,6 @@
 import Layout from "@components/layout";
 import useMe from "@libs/client/useMe";
+import { fetchUsers } from "@libs/client/api";
 import useMutation from "@libs/client/useMutation";
 import useUser from "@libs/client/useUser";
 import { User } from "@prisma/client";
@@ -8,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 import useSWR from "swr";
 
 interface MutationResult {
@@ -15,14 +17,25 @@ interface MutationResult {
   error?: string;
 }
 
+interface UsersResponse {
+  ok: boolean;
+  user: User;
+}
+
 const Profile: NextPage = () => {
   const router = useRouter();
   const user = useMe();
+  const { isLoading, data: userData } = useQuery<UsersResponse>(
+    ["users"],
+    fetchUsers
+  );
+  console.log(userData);
 
   const {
     handleSubmit,
     formState: { errors },
     setError,
+    reset,
   } = useForm();
   const [logout, { loading, error, data }] =
     useMutation<MutationResult>("/api/users/logout");
@@ -30,6 +43,7 @@ const Profile: NextPage = () => {
   const onValid = (data: any) => {
     if (loading) return;
     logout(data);
+    router.reload();
   };
 
   useEffect(() => {
@@ -42,7 +56,7 @@ const Profile: NextPage = () => {
   }, [data, router, loading, setError]);
   return (
     <Layout hasNavBar hasTabBar hasFooter>
-      {user == undefined ? (
+      {userData?.ok == false ? (
         <div className="mt-16 px-4 pb-72">
           <h3 className="text-3xl font-bold text-center">로그인</h3>
           <div className="mt-12">

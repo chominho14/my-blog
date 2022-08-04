@@ -19,7 +19,7 @@ export default function SkillItem({
 }: SkillItemProps) {
   return (
     <Link href={`/skill/${id}`}>
-      <a className="flex px-4  border-b pb-5 cursor-pointer justify-between">
+      <a className=" flex px-4  border-b pb-5 cursor-pointer justify-between">
         <div className="flex space-x-4">
           <div className="pt-2 flex flex-col">
             <div className="flex space-x-2 text-xs">
