@@ -1,23 +1,38 @@
 import Layout from "@components/layout";
 import TextArea from "@components/textarea";
 import useMutation from "@libs/client/useMutation";
+import { Algorithm } from "@prisma/client";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-interface UploadAlgorithm {
+interface UploadAlgorithmForm {
   title: string;
   subtitle: string;
   explanation: string;
 }
 
-const Upload: NextPage = () => {
-  const { register, handleSubmit } = useForm<UploadAlgorithm>();
-  const [uploadSkill, { loading, data }] = useMutation("/api/skills");
+interface UploadAlgorithmMutation {
+  ok: boolean;
+  skill: Algorithm;
+}
 
-  const onValid = (data: UploadAlgorithm) => {
+const Upload: NextPage = () => {
+  const router = useRouter();
+  const { register, handleSubmit } = useForm<UploadAlgorithmForm>();
+  const [uploadSkill, { loading, data }] =
+    useMutation<UploadAlgorithmMutation>("/api/skills");
+
+  const onValid = (data: UploadAlgorithmForm) => {
     if (loading) return;
     uploadSkill(data);
   };
+  useEffect(() => {
+    if (data?.ok) {
+      router.push(`/sill/${data?.skill.id}`);
+    }
+  }, [data, router]);
   return (
     <Layout canGoBack>
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-6">
