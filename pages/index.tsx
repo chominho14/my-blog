@@ -1,8 +1,12 @@
 import Layout from "@components/layout";
+import useMe from "@libs/client/useMe";
+import useUser from "@libs/client/useUser";
 import type { NextPage } from "next";
 import Link from "next/link";
 
 const Home: NextPage = () => {
+  const user = useMe();
+
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="px-4">

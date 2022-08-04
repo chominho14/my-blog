@@ -1,3 +1,5 @@
+import useMe from "@libs/client/useMe";
+import useUser from "@libs/client/useUser";
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +10,7 @@ interface LayoutProps {
   hasTabBar?: boolean;
   hasNavBar?: boolean;
   hasFooter?: boolean;
+  hasLogin?: boolean;
   children: React.ReactNode;
 }
 
@@ -17,11 +20,14 @@ export default function Layout({
   hasTabBar,
   children,
   hasFooter,
+  hasLogin,
 }: LayoutProps) {
   const router = useRouter();
+  const user = useMe();
   const onClick = () => {
     router.back();
   };
+  const user2 = useUser();
   return (
     <div>
       {hasNavBar ? (
@@ -32,10 +38,10 @@ export default function Layout({
           {/* 임의로 코드 구현 => 로그인이 된 유저는 로그인 버튼을 없앤다.
             로그인이 되어있지 않은 유저는 일단 이렇게만 유지
           */}
-          {router.pathname === "/" ||
-          router.pathname === "/skill" ||
-          router.pathname === "/community" ||
-          router.pathname === "/search" ? (
+          {user ? null : router.pathname === "/" ||
+            router.pathname === "/skill" ||
+            router.pathname === "/community" ||
+            router.pathname === "/search" ? (
             <Link href="/login">
               <a className="border-2 px-2 py-1 rounded-lg border-gray-300 transition hover:bg-gray-400 ">
                 로그인
@@ -44,6 +50,7 @@ export default function Layout({
           ) : null}
         </div>
       ) : null}
+
       {canGoBack ? (
         <div className="bg-whilte w-full text-lg font-medium py-3 text-gray-700 border-b top-0 flex items-center justify-between px-6">
           <button onClick={onClick}>

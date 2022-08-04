@@ -16,7 +16,7 @@ export default function Notlogin() {
             </h5>
             <Link href="/login">
               <a className="flex justify-center w-40 bg-red-500 hover:bg-red-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:outline-none mt-6">
-                회원가입
+                로그인
               </a>
             </Link>
           </div>
