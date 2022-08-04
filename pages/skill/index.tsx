@@ -1,8 +1,13 @@
 import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import SkillItem from "@components/skill-item";
+import useMe from "@libs/client/useMe";
+import { User } from "@prisma/client";
 import type { NextPage } from "next";
+
 const Skill: NextPage = () => {
+  const user = useMe();
+
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5">
@@ -21,23 +26,25 @@ const Skill: NextPage = () => {
             hearts={1}
           />
         ))}
-        <FloatingButton href="/skill/upload">
-          <svg
-            className="h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        </FloatingButton>
+        {user?.email == "chominho14@naver.com" ? (
+          <FloatingButton href="/skill/upload">
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+          </FloatingButton>
+        ) : null}
       </div>
     </Layout>
   );

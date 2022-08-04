@@ -14,6 +14,6 @@ interface ProfileResponse {
 
 export default function useUser() {
   const { data, error } = useSWR<ProfileResponse>("/api/users/me");
-  useEffect(() => {}, []);
+
   return { user: data?.profile, isLoading: !data && !error, isError: error };
 }
