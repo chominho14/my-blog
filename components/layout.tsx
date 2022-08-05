@@ -6,7 +6,7 @@ import { User } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface LayoutProps {
   canGoBack?: boolean;
@@ -38,7 +38,7 @@ export default function Layout({
   const user2 = useUser();
 
   const { isLoading, data: userData } = useQuery<UsersResponse>(
-    "users",
+    ["users"],
     fetchUsers
   );
   return (

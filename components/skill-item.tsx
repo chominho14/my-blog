@@ -9,6 +9,13 @@ interface SkillItemProps {
   hearts: number;
 }
 
+function getMonthName(month) {
+  const d = new Date();
+  d.setMonth(month - 1);
+  const monthName = d.toLocaleDateString("en-US", { month: "long" });
+  return monthName.slice(0, 3);
+}
+
 export default function SkillItem({
   time,
   id,
@@ -17,13 +24,21 @@ export default function SkillItem({
   comments,
   hearts,
 }: SkillItemProps) {
+  const timeYear = time.slice(0, 4);
+  const timeDay = time.slice(8, 10);
+  const timeMonth = getMonthName(Number(time.slice(5, 7)));
+  console.log(timeMonth);
+  console.log(timeYear);
+  console.log(timeDay);
   return (
     <Link href={`/skill/${id}`}>
       <a className=" flex px-4  border-b pb-5 cursor-pointer justify-between">
         <div className="flex space-x-4">
           <div className="pt-2 flex flex-col">
             <div className="flex space-x-2 text-xs">
-              <div>{time}</div>
+              <div>
+                {timeMonth}.{timeDay}.{timeYear}
+              </div>
             </div>
             <h2 className="text-xl font-bold text-gray-900">{title}</h2>
             <span className="text-xs text-gray-500">{subtitle}</span>

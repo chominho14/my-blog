@@ -2,38 +2,24 @@ import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import SkillItem from "@components/skill-item";
 import useMe from "@libs/client/useMe";
-import { fetchSkills } from "@libs/client/api";
+import { fetchSkills, fetchUsers } from "@libs/client/api";
 import { Algorithm } from "@prisma/client";
 import type { NextPage } from "next";
-import { useQuery } from "react-query";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 interface AlgorithmResponse {
   ok: boolean;
-  algorithms: Algorithm[];
+  skills: Algorithm[];
 }
 
 const Skill: NextPage = () => {
   const user = useMe();
+
   const { isLoading, data: skillData } = useQuery<AlgorithmResponse>(
     ["skills"],
     fetchSkills
   );
-
-  console.log(skillData);
-
-  const [skills, setSkills] = useState<AlgorithmResponse>();
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("/api/skills");
-      const json = await response.json();
-      setSkills(json);
-      setLoading(false);
-    })();
-  }, []);
-  console.log(skills);
 
   return (
     <Layout hasNavBar hasTabBar>
@@ -42,31 +28,20 @@ const Skill: NextPage = () => {
           개발자가 되기 위한 노력 (사진)
         </div>
         <div className="px-4">전체 항목</div>
-        {skillData?.algorithms?.map((algo) => (
-          <SkillItem
-            id={algo.id}
-            key={algo.id}
-            time={algo.createdAt + ""}
-            title={algo.title}
-            subtitle={algo.subtitle}
-            comments={1}
-            hearts={1}
-          />
-        ))}
-
-        {/* {loading
-          ? null
-          : skills?.algorithms?.map((algo) => (
-              <SkillItem
-                id={algo.id}
-                key={algo.id}
-                time={algo.createdAt + ""}
-                title={algo.title}
-                subtitle={algo.subtitle}
-                comments={1}
-                hearts={1}
-              />
-            ))} */}
+        {skillData?.skills
+          ?.slice(0)
+          .reverse()
+          .map((skill) => (
+            <SkillItem
+              id={skill.id}
+              key={skill.id}
+              time={skill.createdAt + ""}
+              title={skill.title}
+              subtitle={skill.subtitle}
+              comments={1}
+              hearts={1}
+            />
+          ))}
 
         {user?.email == "chominho14@naver.com" ? (
           <FloatingButton href="/skill/upload">

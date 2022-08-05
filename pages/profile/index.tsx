@@ -2,15 +2,13 @@ import Layout from "@components/layout";
 import useMe from "@libs/client/useMe";
 import { fetchUsers } from "@libs/client/api";
 import useMutation from "@libs/client/useMutation";
-import useUser from "@libs/client/useUser";
 import { User } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 
 interface MutationResult {
   ok: boolean;
@@ -24,7 +22,6 @@ interface UsersResponse {
 
 const Profile: NextPage = () => {
   const router = useRouter();
-  const user = useMe();
   const { isLoading, data: userData } = useQuery<UsersResponse>(
     ["users"],
     fetchUsers
@@ -49,7 +46,6 @@ const Profile: NextPage = () => {
   useEffect(() => {
     if (data?.ok) {
       if (loading) return;
-      //   router.push("/profile");
     } else if (!data?.ok && data?.error) {
       setError("result", { message: data?.error });
     }
