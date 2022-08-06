@@ -9,7 +9,7 @@ interface SkillItemProps {
   hearts: number;
 }
 
-function getMonthName(month) {
+export function getMonthName(month: number) {
   const d = new Date();
   d.setMonth(month - 1);
   const monthName = d.toLocaleDateString("en-US", { month: "long" });
@@ -27,9 +27,7 @@ export default function SkillItem({
   const timeYear = time.slice(0, 4);
   const timeDay = time.slice(8, 10);
   const timeMonth = getMonthName(Number(time.slice(5, 7)));
-  console.log(timeMonth);
-  console.log(timeYear);
-  console.log(timeDay);
+
   return (
     <Link href={`/skill/${id}`}>
       <a className=" flex px-4  border-b pb-5 cursor-pointer justify-between">

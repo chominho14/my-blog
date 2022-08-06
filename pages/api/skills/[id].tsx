@@ -7,23 +7,14 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  try {
-    if (req.session.user) {
-      const profile = await client.user.findUnique({
-        where: { id: req.session.user?.id },
-      });
-      res.json({
-        ok: true,
-        profile,
-      });
-    } else {
-      res.json({
-        ok: false,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ ok: false });
+  const { id } = req.query;
+  if (id !== undefined) {
+    const skill = await client.algorithm.findUnique({
+      where: {
+        id: +id,
+      },
+    });
+    res.json({ ok: true, skill });
   }
 }
 

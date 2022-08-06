@@ -1,14 +1,29 @@
 import Layout from "@components/layout";
+import { getMonthName } from "@components/skill-item";
+import { fetchSkillsDetail } from "@libs/client/api";
 import { cls } from "@libs/client/utils";
+import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 
 const SkillDetail: NextPage = () => {
+  const router = useRouter();
+  const skillID = router.query.id;
   const fakeLuvData = true;
+  const { data, isLoading } = useQuery(["skillDetail", skillID], () =>
+    fetchSkillsDetail(skillID)
+  );
+  console.log(data);
+
+  const timeYear = data?.skill?.createdAt.slice(0, 4);
+  const timeDay = data?.skill?.createdAt.slice(8, 10);
+  const timeMonth = getMonthName(Number(data?.skill?.createdAt.slice(5, 7)));
+
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5 py-10 px-4">
         <div className="flex">
-          <h2 className="text-2xl w-full">제목</h2>
+          <h2 className="text-2xl w-full">{data?.skill?.title}</h2>
           <button
             className={cls(
               "transition flex items-center justify-center rounded-md p-3 hover:bg-gray-100 border-2 ",
@@ -51,11 +66,11 @@ const SkillDetail: NextPage = () => {
         </div>
         <hr />
         <div className="flex flex-col space-x-2">
-          <div className="py-3 px-2  text-xs">Jul.27.2022</div>
-          <div className="py-3 text-lg">부제목</div>
-          <p className="text-sm">
-            안녕하세요. 코드입니다. ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ 무엇일까요.
-          </p>
+          <div className="py-3 px-2  text-xs">
+            {timeMonth}.{timeDay}.{timeYear}
+          </div>
+          <div className="py-3 text-lg">{data?.skill?.subtitle}</div>
+          <p className="text-sm">{data?.skill?.explanation}</p>
         </div>
         <div className="py-4">
           <div className="py-3 text-sm font-bold">댓글 0개</div>
