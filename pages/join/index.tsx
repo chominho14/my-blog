@@ -1,5 +1,5 @@
 import Layout from "@components/layout";
-import useMutation from "@libs/client/useMutation";
+import useMutations from "@libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -30,7 +30,7 @@ export default function Join() {
   });
 
   const [join, { loading, data, error }] =
-    useMutation<MutationResult>("/api/users/join");
+    useMutations<MutationResult>("/api/users/join");
 
   const onValid = (data: JoinForm) => {
     if (loading) return;

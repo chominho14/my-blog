@@ -1,19 +1,93 @@
 import Layout from "@components/layout";
 import { getMonthName } from "@components/skill-item";
 import { fetchSkillsDetail } from "@libs/client/api";
+import useMutations from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
-import { useQuery } from "@tanstack/react-query";
+import { Algorithm, User } from "@prisma/client";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+
+interface AlgorithmWithUser extends Algorithm {
+  user: User;
+}
+
+interface SkillDetailResoponse {
+  ok: boolean;
+  skill: AlgorithmWithUser;
+  isLiked: boolean;
+}
 
 const SkillDetail: NextPage = () => {
   const router = useRouter();
   const skillID = router.query.id;
-  const fakeLuvData = true;
-  const { data, isLoading } = useQuery(["skillDetail", skillID], () =>
-    fetchSkillsDetail(skillID)
+
+  const { data, isLoading } = useQuery<SkillDetailResoponse>(
+    ["skillDetail", skillID],
+    () => fetchSkillsDetail(skillID)
   );
-  console.log(data);
+
+  const [toggleFav] = useMutations(`/api/skills/${router.query.id}/fav`);
+  const onFavClick = () => {
+    if (!data) return;
+    mutate();
+    toggleFav({});
+  };
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation<SkillDetailResoponse>(
+    useMutations(`/api/skills/${router.query.id}/fav`),
+
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries(["skillDetail", skillID]);
+        const prevData = queryClient.getQueryData<SkillDetailResoponse>([
+          "skillDetail",
+          skillID,
+        ]);
+        queryClient.setQueryData(["skillDetail", skillID], () => ({
+          ...data,
+          isLiked: !data?.isLiked,
+        }));
+        return {
+          prevData,
+        };
+      },
+      onError: (_error, _data, context) => {
+        //   queryClient.setQueryData(["skillDetail"], context?.prevData);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["skillDetail", skillID]);
+      },
+    }
+  );
+  //   const useLikeAdd = () => {
+  //     const queryClient = useQueryClient();
+
+  //     return useMutation<SkillDetailResoponse>(
+  //       useMutations(`/api/skills/${router.query.id}/fav`),
+  //       {
+  //         onMutate: async (newTodo: any) => {
+  //           await queryClient.cancelQueries(["skillDetail"]);
+  //           const prevData = queryClient.getQueryData(["skillDetail"]);
+  //           queryClient.setQueryData(["skillDetail"], () => ({
+  //             ...data,
+  //             isLiked: !data?.isLiked,
+  //           }));
+  //           return {
+  //             prevData,
+  //           };
+  //         },
+  //         onError: (_error, _data, context) => {
+  //           //   queryClient.setQueryData(["skillDetail", skillID], context?.prevData);
+  //         },
+  //         onSettled: () => {
+  //           queryClient.invalidateQueries(["skillDetail", skillID]);
+  //         },
+  //       }
+  //     );
+  //   };
 
   const timeYear = data?.skill?.createdAt.slice(0, 4);
   const timeDay = data?.skill?.createdAt.slice(8, 10);
@@ -25,14 +99,15 @@ const SkillDetail: NextPage = () => {
         <div className="flex">
           <h2 className="text-2xl w-full">{data?.skill?.title}</h2>
           <button
+            onClick={onFavClick}
             className={cls(
               "transition flex items-center justify-center rounded-md p-3 hover:bg-gray-100 border-2 ",
-              fakeLuvData
+              data?.isLiked
                 ? "text-red-500  hover:text-red-600"
                 : "text-gray-400 hover:text-gray-500"
             )}
           >
-            {fakeLuvData ? (
+            {data?.isLiked ? (
               <svg
                 className="h-6 w-6"
                 fill="currentColor"
@@ -67,7 +142,11 @@ const SkillDetail: NextPage = () => {
         <hr />
         <div className="flex flex-col space-x-2">
           <div className="py-3 px-2  text-xs">
-            {timeMonth}.{timeDay}.{timeYear}
+            <div className="flex">
+              {timeMonth}.{timeDay}.{timeYear}&nbsp;&nbsp;
+              {data?.skill?.user?.name}&nbsp;&nbsp;
+              <div className="bg-gray-300 w-5 h-5 rounded-full mb-1" />
+            </div>
           </div>
           <div className="py-3 text-lg">{data?.skill?.subtitle}</div>
           <p className="text-sm">{data?.skill?.explanation}</p>

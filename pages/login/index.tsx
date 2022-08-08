@@ -1,6 +1,6 @@
 import Input from "@components/input";
 import Layout from "@components/layout";
-import useMutation from "@libs/client/useMutation";
+import useMutations from "@libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ export default function Login() {
     formState: { errors },
   } = useForm<LoginForm>();
   const [login, { loading, data }] =
-    useMutation<MutationResult>("/api/users/login");
+    useMutations<MutationResult>("/api/users/login");
 
   const onValid = (data: LoginForm) => {
     if (loading) return;

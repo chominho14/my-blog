@@ -2,7 +2,6 @@
 // react hook
 // client에서 넘어온 data를 백엔드로 POST, GET fetch를 해줄 수 잇게 만든다.
 
-import { prepareServerlessUrl } from "next/dist/server/base-server";
 import { useState } from "react";
 
 // useMutation은 첫번째 인자로 함수를 받고 그 안에 client의 데이터를 받아올 것이다.
@@ -18,7 +17,7 @@ interface UseMutationState<T> {
 
 type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
 
-export default function useMutation<T = any>(
+export default function useMutations<T = any>(
   url: string
 ): UseMutationResult<T> {
   const [state, setState] = useState({

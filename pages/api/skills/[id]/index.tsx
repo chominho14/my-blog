@@ -1,20 +1,43 @@
 import client from "@libs/server/client";
 import { withApiSession } from "@libs/server/withSession";
 import { NextApiRequest, NextApiResponse } from "next";
-import withHandler, { ResponseType } from "../../../libs/server/withHandler";
+import withHandler, { ResponseType } from "@libs/server/withHandler";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { id } = req.query;
+  const {
+    query: { id },
+    session: { user },
+  } = req;
   if (id !== undefined) {
     const skill = await client.algorithm.findUnique({
       where: {
         id: +id,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true,
+          },
+        },
+      },
     });
-    res.json({ ok: true, skill });
+    const isLiked = Boolean(
+      await client.fav.findFirst({
+        where: {
+          algorithmId: skill?.id,
+          userId: user?.id,
+        },
+        select: {
+          id: true,
+        },
+      })
+    );
+    res.json({ ok: true, isLiked, skill });
   }
 }
 

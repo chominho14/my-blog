@@ -34,8 +34,9 @@ export default function SkillItem({
         <div className="flex space-x-4">
           <div className="pt-2 flex flex-col">
             <div className="flex space-x-2 text-xs">
-              <div>
-                {timeMonth}.{timeDay}.{timeYear}
+              <div className="flex">
+                {timeMonth}.{timeDay}.{timeYear}&nbsp;&nbsp; 조민호&nbsp;&nbsp;
+                <div className="bg-gray-300 w-5 h-5 rounded-full mb-1" />
               </div>
             </div>
             <h2 className="text-xl font-bold text-gray-900">{title}</h2>

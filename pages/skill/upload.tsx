@@ -1,6 +1,6 @@
 import Layout from "@components/layout";
 import TextArea from "@components/textarea";
-import useMutation from "@libs/client/useMutation";
+import useMutations from "@libs/client/useMutation";
 import { Algorithm } from "@prisma/client";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -22,7 +22,7 @@ const Upload: NextPage = () => {
   const router = useRouter();
   const { register, handleSubmit } = useForm<UploadAlgorithmForm>();
   const [uploadSkill, { loading, data }] =
-    useMutation<UploadAlgorithmMutation>("/api/skills");
+    useMutations<UploadAlgorithmMutation>("/api/skills");
 
   const onValid = (data: UploadAlgorithmForm) => {
     if (loading) return;
