@@ -8,6 +8,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 interface AlgorithmWithUser extends Algorithm {
   user: User;
@@ -23,7 +24,7 @@ const SkillDetail: NextPage = () => {
   const router = useRouter();
   const skillID = router.query.id;
 
-  const { data, isLoading } = useQuery<SkillDetailResoponse>(
+  const { data, isLoading, refetch } = useQuery<SkillDetailResoponse>(
     ["skillDetail", skillID],
     () => fetchSkillsDetail(skillID)
   );
@@ -31,16 +32,63 @@ const SkillDetail: NextPage = () => {
   const [toggleFav] = useMutations(`/api/skills/${router.query.id}/fav`);
   const onFavClick = () => {
     if (!data) return;
+    // mutation.mutate(skillID);
     mutate();
     toggleFav({});
+    setTimeout(() => {
+      refetch();
+    }, 100);
   };
+  useEffect(() => {
+    if (data) {
+      refetch();
+    }
+  }, [data]);
+
+  const toggleSkillLiked = async (skillID: any) => {
+    fetch(`/api/skills/${skillID}/fav`).then((res) => res.json());
+  };
+
+  // 방법 1
+  //   const queryClient = useQueryClient();
+
+  //   const mutation = useMutation(
+  //     useMutations(`/api/skills/${router.query.id}/fav`),
+  //     {
+  //       onMutate: async (skillId) => {
+  //         await queryClient.cancelQueries(["skillDetail", skillID]);
+  //         const prevData = queryClient.getQueriesData(["skillDetail", skillID]);
+
+  //         queryClient.setQueryData(["skillDetail", skillID], (oldLiked: any) =>
+  //           oldLiked.map((liked: any) => {
+  //             if (liked.id === skillID) {
+  //               return {
+  //                 ...liked,
+  //                 isLiked: !liked.isLiked,
+  //               };
+  //             }
+  //             return liked;
+  //           })
+  //         );
+  //         return { prevData };
+  //       },
+  //       onError: (error, skillID, { prevData }) => {
+  //         queryClient.setQueryData(["skillDetail", skillID], prevData);
+  //       },
+  //       onSuccess() {
+  //         queryClient.invalidateQueries(["skillDetail", skillID]);
+  //       },
+  //     }
+  //   );
+
+  //   방법 2
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation<SkillDetailResoponse>(
-    useMutations(`/api/skills/${router.query.id}/fav`),
+    useMutations(`/api/skills/${router.query.id}`),
 
     {
-      onMutate: async () => {
+      onMutate: async (newData) => {
         await queryClient.cancelQueries(["skillDetail", skillID]);
         const prevData = queryClient.getQueryData<SkillDetailResoponse>([
           "skillDetail",
@@ -62,6 +110,8 @@ const SkillDetail: NextPage = () => {
       },
     }
   );
+
+  // 방법 3
   //   const useLikeAdd = () => {
   //     const queryClient = useQueryClient();
 
