@@ -25,3 +25,7 @@ export async function fetchPostDetail(postId: string | string[] | undefined) {
     return fetch(null).then((res) => res.json());
   }
 }
+
+export async function fetchAllPost() {
+  return fetch(`/api/posts`).then((res) => res.json());
+}

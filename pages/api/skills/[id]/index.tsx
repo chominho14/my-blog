@@ -26,6 +26,9 @@ async function handler(
         },
       },
     });
+    if (!skill) {
+      res.status(404).json({ ok: false, error: "게시글을 찾을 수 없습니다." });
+    }
     const isLiked = Boolean(
       await client.fav.findFirst({
         where: {

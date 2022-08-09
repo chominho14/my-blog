@@ -1,7 +1,7 @@
 import client from "@libs/server/client";
 import { withApiSession } from "@libs/server/withSession";
 import { NextApiRequest, NextApiResponse } from "next";
-import withHandler, { ResponseType } from "../../../libs/server/withHandler";
+import withHandler, { ResponseType } from "../../../../libs/server/withHandler";
 
 async function handler(
   req: NextApiRequest,
@@ -9,6 +9,7 @@ async function handler(
 ) {
   const {
     query: { id },
+    session: { user },
   } = req;
   if (id !== undefined) {
     const post = await client.post.findUnique({
@@ -27,6 +28,7 @@ async function handler(
           select: {
             answer: true,
             id: true,
+            createdAt: true,
             user: {
               select: {
                 id: true,
@@ -44,12 +46,24 @@ async function handler(
         },
       },
     });
+    const isWondering = Boolean(
+      await client.wondering.findFirst({
+        where: {
+          postId: +id,
+          userId: user?.id,
+        },
+        select: {
+          id: true,
+        },
+      })
+    );
     if (!post) {
       res.status(404).json({ ok: false, error: "게시글을 찾을 수 없습니다." });
     }
     res.json({
       ok: true,
       post,
+      isWondering,
     });
   }
 }

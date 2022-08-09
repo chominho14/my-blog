@@ -18,6 +18,9 @@ async function handler(
         },
       },
     });
+    if (!skills) {
+      res.status(404).json({ ok: false, error: "게시글을 찾을 수 없습니다." });
+    }
     res.json({
       ok: true,
       skills,
@@ -41,7 +44,9 @@ async function handler(
         },
       },
     });
-
+    if (!skills) {
+      res.status(404).json({ ok: false, error: "게시글을 만들 수 없습니다." });
+    }
     res.json({
       ok: true,
       skills,

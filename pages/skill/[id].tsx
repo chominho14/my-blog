@@ -42,10 +42,6 @@ const SkillDetail: NextPage = () => {
     refetch();
   }, [data]);
 
-  const toggleSkillLiked = async (skillID: any) => {
-    fetch(`/api/skills/${skillID}/fav`).then((res) => res.json());
-  };
-
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation<SkillDetailResoponse>(
