@@ -8,7 +8,16 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
-    const skills = await client.algorithm.findMany({});
+    const skills = await client.algorithm.findMany({
+      include: {
+        // _count 를 이용하면 좋아요의 갯수만 가져올 수 있다.
+        _count: {
+          select: {
+            favs: true,
+          },
+        },
+      },
+    });
     res.json({
       ok: true,
       skills,

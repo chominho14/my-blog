@@ -8,9 +8,15 @@ import type { NextPage } from "next";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
+interface AlgorithmWithCount extends Algorithm {
+  _count: {
+    favs: number;
+  };
+}
+
 interface AlgorithmResponse {
   ok: boolean;
-  skills: Algorithm[];
+  skills: AlgorithmWithCount[];
 }
 
 const Skill: NextPage = () => {
@@ -39,7 +45,7 @@ const Skill: NextPage = () => {
               title={skill.title}
               subtitle={skill.subtitle}
               comments={1}
-              hearts={1}
+              hearts={skill._count.favs}
             />
           ))}
 

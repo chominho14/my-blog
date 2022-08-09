@@ -32,7 +32,6 @@ const SkillDetail: NextPage = () => {
   const [toggleFav] = useMutations(`/api/skills/${router.query.id}/fav`);
   const onFavClick = () => {
     if (!data) return;
-    // mutation.mutate(skillID);
     mutate();
     toggleFav({});
     setTimeout(() => {
@@ -40,48 +39,13 @@ const SkillDetail: NextPage = () => {
     }, 100);
   };
   useEffect(() => {
-    if (data) {
-      refetch();
-    }
+    refetch();
   }, [data]);
 
   const toggleSkillLiked = async (skillID: any) => {
     fetch(`/api/skills/${skillID}/fav`).then((res) => res.json());
   };
 
-  // 방법 1
-  //   const queryClient = useQueryClient();
-
-  //   const mutation = useMutation(
-  //     useMutations(`/api/skills/${router.query.id}/fav`),
-  //     {
-  //       onMutate: async (skillId) => {
-  //         await queryClient.cancelQueries(["skillDetail", skillID]);
-  //         const prevData = queryClient.getQueriesData(["skillDetail", skillID]);
-
-  //         queryClient.setQueryData(["skillDetail", skillID], (oldLiked: any) =>
-  //           oldLiked.map((liked: any) => {
-  //             if (liked.id === skillID) {
-  //               return {
-  //                 ...liked,
-  //                 isLiked: !liked.isLiked,
-  //               };
-  //             }
-  //             return liked;
-  //           })
-  //         );
-  //         return { prevData };
-  //       },
-  //       onError: (error, skillID, { prevData }) => {
-  //         queryClient.setQueryData(["skillDetail", skillID], prevData);
-  //       },
-  //       onSuccess() {
-  //         queryClient.invalidateQueries(["skillDetail", skillID]);
-  //       },
-  //     }
-  //   );
-
-  //   방법 2
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation<SkillDetailResoponse>(
@@ -110,34 +74,6 @@ const SkillDetail: NextPage = () => {
       },
     }
   );
-
-  // 방법 3
-  //   const useLikeAdd = () => {
-  //     const queryClient = useQueryClient();
-
-  //     return useMutation<SkillDetailResoponse>(
-  //       useMutations(`/api/skills/${router.query.id}/fav`),
-  //       {
-  //         onMutate: async (newTodo: any) => {
-  //           await queryClient.cancelQueries(["skillDetail"]);
-  //           const prevData = queryClient.getQueryData(["skillDetail"]);
-  //           queryClient.setQueryData(["skillDetail"], () => ({
-  //             ...data,
-  //             isLiked: !data?.isLiked,
-  //           }));
-  //           return {
-  //             prevData,
-  //           };
-  //         },
-  //         onError: (_error, _data, context) => {
-  //           //   queryClient.setQueryData(["skillDetail", skillID], context?.prevData);
-  //         },
-  //         onSettled: () => {
-  //           queryClient.invalidateQueries(["skillDetail", skillID]);
-  //         },
-  //       }
-  //     );
-  //   };
 
   const timeYear = data?.skill?.createdAt.slice(0, 4);
   const timeDay = data?.skill?.createdAt.slice(8, 10);
