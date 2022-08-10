@@ -1,11 +1,30 @@
 import Layout from "@components/layout";
+import { fetchAllPost } from "@libs/client/api";
 import useMe from "@libs/client/useMe";
 import useUser from "@libs/client/useUser";
+import { Post, User } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import Link from "next/link";
 
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    wondering: number;
+    answers: number;
+  };
+}
+
+interface CommunityResponse {
+  ok: boolean;
+  posts: PostWithUser[];
+}
+
 const Home: NextPage = () => {
-  const user = useMe();
+  const { data, isLoading } = useQuery<CommunityResponse>(
+    ["allPost"],
+    fetchAllPost
+  );
 
   return (
     <Layout hasNavBar hasTabBar hasFooter>
@@ -126,20 +145,29 @@ const Home: NextPage = () => {
           </Link>
         </div>
         <div className="h-40 py-3 flex whitespace-nowrap overflow-x-scroll scrollbar-hide snap-x">
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="rounded-lg mx-3 px-3 bg-slate-200 snap-normal snap-center border-2 border-gray-300"
-            >
-              <div className="w-60 flex flex-col items-center pt-5">
-                <div className="py-3">~~~이 궁금해요~</div>
-                <div className="flex text-xs py-3 space-x-2">
-                  <div>궁금해요 0</div>
-                  <div>답변 0</div>
-                </div>
-              </div>
-            </div>
-          ))}
+          {data?.posts
+            ?.slice(0)
+            .reverse()
+            .map((post) => (
+              <Link key={post.id} href={`/community/${post.id}`}>
+                <a className="rounded-lg mx-3 px-3 transition bg-gray-100 border-red-200 snap-normal snap-center border-2 hover:border-red-300 hover:bg-red-100">
+                  <div className="w-60 flex flex-col items-center pt-5">
+                    <div className="py-3">{post.question}</div>
+                    <div className="flex text-xs py-3 space-x-2">
+                      <div>
+                        궁금해요 &nbsp;
+                        {post._count.wondering ? post._count.wondering : 0}
+                      </div>
+                      &nbsp;
+                      <div>
+                        답변 &nbsp;
+                        {post._count.answers ? post._count.answers : 0}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </Link>
+            ))}
         </div>
 
         <div className="h-1 bg-gray-200 my-4" />

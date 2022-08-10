@@ -1,11 +1,54 @@
 import Layout from "@components/layout";
+import { fetchSearchPost } from "@libs/client/api";
+import useMutations from "@libs/client/useMutation";
+import { Post, User } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
+interface SearchpostWithUser extends Post {
+  user: User;
+  _count: {
+    wondering: number;
+    answers: number;
+  };
+}
+
+interface SearchResponse {
+  ok: boolean;
+  searchPosts: SearchpostWithUser[];
+}
+
+interface EnterForm {
+  searchText: string;
+}
 
 export default function Enter() {
+  const router = useRouter();
+  const { register, handleSubmit, reset } = useForm<EnterForm>();
+  const [searchSkill, { loading, data: searchData }] =
+    useMutations<SearchResponse>("/api/search");
+
+  const { data, isLoading } = useQuery<SearchResponse>(["searchPost"], () =>
+    fetchSearchPost()
+  );
+  console.log(data);
+
+  const onValid = (form: EnterForm) => {
+    if (loading) return;
+    searchSkill(form);
+    console.log(form);
+    reset();
+  };
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="px-4">
-        <div className="flex justify-center space-x-1">
+        <form
+          onSubmit={handleSubmit(onValid)}
+          className="flex justify-center space-x-1"
+        >
           <input
+            {...register("searchText", { required: true })}
             type="text"
             className="transition hover:border-red-400 mt-2 appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-400 focus:border-red-400"
             required
@@ -27,7 +70,7 @@ export default function Enter() {
               />
             </svg>
           </button>
-        </div>
+        </form>
         <div className="py-4 mt-4 px-2">
           <div>인기 검색어</div>
           <div className="flex flex-col space-y-5 py-10">

@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 interface AlgorithmWithCount extends Algorithm {
   _count: {
     favs: number;
+    skillAnswers: number;
   };
 }
 
@@ -44,7 +45,9 @@ const Skill: NextPage = () => {
               time={skill.createdAt + ""}
               title={skill.title}
               subtitle={skill.subtitle}
-              comments={1}
+              comments={
+                skill._count.skillAnswers ? skill._count.skillAnswers : 0
+              }
               hearts={skill._count.favs}
             />
           ))}

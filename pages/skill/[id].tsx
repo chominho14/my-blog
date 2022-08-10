@@ -179,7 +179,13 @@ const SkillDetail: NextPage = () => {
           <p className="text-sm">{data?.skill?.explanation}</p>
         </div>
         <div className="py-4">
-          <div className="py-3 text-sm font-bold">댓글 0개</div>
+          <div className="py-3 text-sm font-bold">
+            댓글{" "}
+            {data?.skill?._count?.skillAnswers
+              ? data?.skill?._count?.skillAnswers
+              : 0}
+            개
+          </div>
           <hr />
           <form
             onSubmit={handleSubmit(onValid)}

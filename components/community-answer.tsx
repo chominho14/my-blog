@@ -5,7 +5,7 @@ interface SillComentProps {
   time: string;
 }
 
-export function timeForToday(value: string) {
+export function timeForToday(value: any) {
   const today = new Date();
   const timeValue = new Date(value);
 
