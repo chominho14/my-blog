@@ -3,15 +3,27 @@ import { getMonthName } from "@components/skill-item";
 import { fetchSkillsDetail } from "@libs/client/api";
 import useMutations from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
-import { Algorithm, User } from "@prisma/client";
+import { Algorithm, SkillAnswer, User } from "@prisma/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import SkillComment from "@components/skillcomment";
+import { timeForToday } from "@components/community-answer";
+
+interface SkillAnswerWithUser extends SkillAnswer {
+  user: User;
+}
 
 interface AlgorithmWithUser extends Algorithm {
   user: User;
+  _count: {
+    skillAnswers: number;
+    like: number;
+  };
+  skillAnswers: SkillAnswerWithUser[];
 }
 
 interface SkillDetailResoponse {
@@ -20,20 +32,40 @@ interface SkillDetailResoponse {
   isLiked: boolean;
 }
 
+interface SkillAnswerForm {
+  skillAnswer: string;
+}
+
+interface SkillAnswerResponse {
+  ok: boolean;
+  response: SkillAnswer;
+}
+
 const SkillDetail: NextPage = () => {
   const router = useRouter();
   const skillID = router.query.id;
+
+  const { register, handleSubmit, reset } = useForm<SkillAnswerForm>();
 
   const { data, isLoading, refetch } = useQuery<SkillDetailResoponse>(
     ["skillDetail", skillID],
     () => fetchSkillsDetail(skillID)
   );
 
-  const [toggleFav] = useMutations(`/api/skills/${router.query.id}/fav`);
+  const [toggleFav, { loading }] = useMutations(
+    `/api/skills/${router.query.id}/fav`
+  );
+  const [
+    sendSkillAnswer,
+    { data: skillAnswerData, loading: skillAnswerLoading },
+  ] = useMutations<SkillAnswerResponse>(`/api/skills/${skillID}/skillanswers`);
+
   const onFavClick = () => {
     if (!data) return;
     mutate();
-    toggleFav({});
+    if (!loading) {
+      toggleFav({});
+    }
     setTimeout(() => {
       refetch();
     }, 100);
@@ -71,6 +103,19 @@ const SkillDetail: NextPage = () => {
     }
   );
 
+  // 댓글에 대한 onValid
+  const onValid = (form: SkillAnswerForm) => {
+    if (skillAnswerLoading) return;
+    sendSkillAnswer(form);
+  };
+
+  useEffect(() => {
+    if (skillAnswerData && skillAnswerData.ok) {
+      reset();
+      mutate();
+    }
+  }, [skillAnswerData, reset]);
+  console.log(data);
   const timeYear = data?.skill?.createdAt.slice(0, 4);
   const timeDay = data?.skill?.createdAt.slice(8, 10);
   const timeMonth = getMonthName(Number(data?.skill?.createdAt.slice(5, 7)));
@@ -136,34 +181,30 @@ const SkillDetail: NextPage = () => {
         <div className="py-4">
           <div className="py-3 text-sm font-bold">댓글 0개</div>
           <hr />
-          <div className="flex space-x-2 pt-5">
+          <form
+            onSubmit={handleSubmit(onValid)}
+            className="flex space-x-2 pt-5"
+          >
             <div className="w-10 h-10 bg-slate-200"></div>
             <input
+              {...register("skillAnswer", { required: true })}
               className="appearance-none w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 hover:border-red-300"
               type="text"
             />
             <button className="w-10 hover:bg-red-500 transition-colors cursor-pointer shadow-xl bg-red-400 rounded-sm text-white text-sm">
-              게시
+              {skillAnswerLoading ? "처리 중..." : "게시"}
             </button>
-          </div>
+          </form>
         </div>
         <hr />
         <div>
-          {[...Array(10)].map((_, i) => (
-            <div key={i}>
-              <div className="flex space-x-2 py-3">
-                <div className="w-10 h-10 bg-slate-200"></div>
-                <div className="w-9/12 pl-3">
-                  <div>username</div>
-                  <div className="text-sm">
-                    ~~게 하면 더 쉬운 코드 작성이
-                    가능합니다.~~~~~~~~~~~~~~~~~ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-                  </div>
-                  <div className=" text-xs text-gray-400">1달</div>
-                </div>
-              </div>
-              <hr />
-            </div>
+          {data?.skill.skillAnswers.map((skillAnswer) => (
+            <SkillComment
+              key={skillAnswer.id}
+              name={skillAnswer.user.name}
+              time={timeForToday(skillAnswer.createdAt)}
+              comment={skillAnswer.skillAnswer}
+            />
           ))}
         </div>
       </div>

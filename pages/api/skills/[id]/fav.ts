@@ -17,6 +17,9 @@ async function handler(
         algorithmId: +id,
         userId: user?.id,
       },
+      select: {
+        id: true,
+      },
     });
     if (alreadyExists) {
       // 좋아요 삭제

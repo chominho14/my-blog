@@ -24,6 +24,26 @@ async function handler(
             avatar: true,
           },
         },
+        skillAnswers: {
+          select: {
+            skillAnswer: true,
+            id: true,
+            createdAt: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                avatar: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            skillAnswers: true,
+            favs: true,
+          },
+        },
       },
     });
     if (!skill) {
@@ -40,6 +60,9 @@ async function handler(
         },
       })
     );
+    if (!skill) {
+      res.status(404).json({ ok: false, error: "게시글을 찾을 수 없습니다." });
+    }
     res.json({ ok: true, isLiked, skill });
   }
 }

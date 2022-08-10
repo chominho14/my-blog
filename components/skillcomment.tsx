@@ -1,3 +1,5 @@
+import { timeForToday } from "./community-answer";
+
 interface SillComentProps {
   name?: string;
   comment: string;
@@ -11,6 +13,7 @@ export default function SkillComment({
   avatarUrl,
   time,
 }: SillComentProps) {
+  // const beforeTime = timeForToday(time);
   return (
     <div>
       <div className="flex space-x-2 py-3">
@@ -18,7 +21,7 @@ export default function SkillComment({
         <div className="w-9/12 pl-3">
           <div>{name}</div>
           <div className="text-sm">{comment}</div>
-          <div className=" text-xs text-gray-400">{time}</div>
+          <div className=" text-xs text-gray-400">· {time}</div>
         </div>
       </div>
       <hr />
