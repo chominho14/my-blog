@@ -1,5 +1,6 @@
 import Layout from "@components/layout";
 import { fetchSearchPost } from "@libs/client/api";
+import useGET from "@libs/client/useGet";
 import useMutations from "@libs/client/useMutation";
 import { Post, User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
@@ -27,7 +28,7 @@ export default function Enter() {
   const router = useRouter();
   const { register, handleSubmit, reset } = useForm<EnterForm>();
   const [searchSkill, { loading, data: searchData }] =
-    useMutations<SearchResponse>("/api/search");
+    useGET<SearchResponse>("/api/search");
 
   const { data, isLoading } = useQuery<SearchResponse>(["searchPost"], () =>
     fetchSearchPost()
