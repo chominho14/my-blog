@@ -29,7 +29,7 @@ const Home: NextPage = () => {
   return (
     <Layout hasNavBar hasTabBar hasFooter>
       <div className="px-4">
-        <div>
+        {/* <div>
           <Link href="/search">
             <a className="hover:bg-slate-300 transition flex justify-start bg-slate-200 w-full px-3 py-2 rounded-md cursor-pointer border-2 hover:border-gray-400">
               <div className="flex">
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
               </div>
             </a>
           </Link>
-        </div>
+        </div> */}
         <div className="h-20 w-20 bg-slate-200 mt-3  "></div>
         <h1 className="text-black py-4 text-2xl">조민호의 기술블로그</h1>
         <div className="text-xl text-red-400 flex">

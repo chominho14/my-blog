@@ -8,7 +8,7 @@ import type { NextPage } from "next";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-interface AlgorithmWithCount extends Algorithm {
+export interface AlgorithmWithCount extends Algorithm {
   _count: {
     favs: number;
     skillAnswers: number;

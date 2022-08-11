@@ -30,6 +30,10 @@ export async function fetchAllPost() {
   return fetch(`/api/posts`).then((res) => res.json());
 }
 
-export async function fetchSearchPost() {
-  return fetch(`/api/search`).then((res) => res.json());
+export async function fetchFavSkills() {
+  return fetch(`/api/users/me/favs`).then((res) => res.json());
 }
+
+// export async function fetchSearchPost() {
+//   return fetch(`/api/search`).then((res) => res.json());
+// }
