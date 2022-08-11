@@ -8,24 +8,33 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
-    const skills = await client.algorithm.findMany({
-      include: {
-        // _count 를 이용하면 좋아요의 갯수만 가져올 수 있다.
-        _count: {
-          select: {
-            favs: true,
-            skillAnswers: true,
+    const {
+      query: { page, limit },
+    } = req;
+    if (page !== undefined && limit !== undefined) {
+      const skills = await client.algorithm.findMany({
+        take: +limit,
+        skip: (+page - 1) * +limit,
+        include: {
+          // _count 를 이용하면 좋아요의 갯수만 가져올 수 있다.
+          _count: {
+            select: {
+              favs: true,
+              skillAnswers: true,
+            },
           },
         },
-      },
-    });
-    if (!skills) {
-      res.status(404).json({ ok: false, error: "게시글을 찾을 수 없습니다." });
+      });
+      if (!skills) {
+        res
+          .status(404)
+          .json({ ok: false, error: "게시글을 찾을 수 없습니다." });
+      }
+      res.json({
+        ok: true,
+        skills,
+      });
     }
-    res.json({
-      ok: true,
-      skills,
-    });
   }
   if (req.method === "POST") {
     const {

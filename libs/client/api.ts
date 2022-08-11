@@ -34,6 +34,12 @@ export async function fetchFavSkills() {
   return fetch(`/api/users/me/favs`).then((res) => res.json());
 }
 
+export async function fetchPagiSkills(page: any, limit: any) {
+  return fetch(`/api/skills?page=${page}&limit=${limit}`).then((res) =>
+    res.json()
+  );
+}
+
 // export async function fetchSearchPost() {
 //   return fetch(`/api/search`).then((res) => res.json());
 // }

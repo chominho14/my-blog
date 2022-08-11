@@ -1,9 +1,19 @@
 import Layout from "@components/layout";
 import SkillItem from "@components/skill-item";
 import { fetchFavSkills } from "@libs/client/api";
+import { Algorithm } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
-import { AlgorithmWithCount } from "pages/skill";
+
+interface AlgorithmWithCounts extends Algorithm {
+  _count: {
+    favs: number;
+    skillAnswers: number;
+  };
+}
+interface AlgorithmWithCount {
+  algorithm: AlgorithmWithCounts;
+}
 
 interface AlgorithmResponse {
   ok: boolean;

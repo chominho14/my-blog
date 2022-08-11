@@ -17,7 +17,7 @@ export default function SkillComment({
   return (
     <div>
       <div className="flex space-x-2 py-3">
-        <div className="w-10 h-10 bg-slate-200"></div>
+        <div className="w-10 h-10 rounded-full bg-slate-200"></div>
         <div className="w-9/12 pl-3">
           <div>{name}</div>
           <div className="text-sm">{comment}</div>
