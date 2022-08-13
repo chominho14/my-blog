@@ -11,6 +11,9 @@ import { useRouter } from "next/router";
 import PaginationButton from "@components/pagination-button";
 
 export interface AlgorithmWithCount extends Algorithm {
+  user: {
+    avatar: string;
+  };
   _count: {
     favs: number;
     skillAnswers: number;
@@ -68,7 +71,7 @@ const Skill: NextPage = () => {
                 skill._count.skillAnswers ? skill._count.skillAnswers : 0
               }
               hearts={skill._count.favs}
-              avatar={user?.avatar}
+              avatar={skill.user.avatar}
             />
           ))}
 

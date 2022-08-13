@@ -45,7 +45,7 @@ export default function CommunityAnswers({
         <Image
           width={40}
           height={40}
-          src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${avatar}/avatar`}
+          src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${avatarUrl}/avatar`}
           className="bg-gray-300 w-5 h-5 rounded-full mb-1"
         />
       ) : (

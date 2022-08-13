@@ -6,6 +6,7 @@ import { cls } from "@libs/client/utils";
 import { Answer, Post, User } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -125,7 +126,17 @@ const CommunityPostDetail: NextPage = () => {
     <Layout seoTitle="CommunityDetail" hasTabBar hasNavBar hasFooter>
       <div className="py-4 pb-20">
         <div className="flex mb-3 px-4 pb-3  border-b items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-slate-300" />
+          {data?.post?.user ? (
+            <Image
+              width={45}
+              height={45}
+              src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data.post.user.avatar}/avatar
+                `}
+              className=" w-16 h-16 bg-slate-500 rounded-full"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-slate-300" />
+          )}
           <div>
             <p className="text-sm font-medium text-gray-700">
               {data?.post?.user?.name}
@@ -187,6 +198,7 @@ const CommunityPostDetail: NextPage = () => {
               name={answer.user.name}
               time={answer.createdAt + ""}
               answer={answer.answer}
+              avatarUrl={answer.user.avatar + ""}
             />
           ))}
         </div>

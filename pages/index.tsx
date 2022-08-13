@@ -54,10 +54,9 @@ const Home: NextPage = () => {
             </a>
           </Link>
         </div> */}
-        {user?.avatar ? (
+        {true ? (
           <img
-            src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/public
-                `}
+            src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/ce34210a-b238-4a6d-854c-fb8089a9d300/avatar`}
             className="h-20 w-20 bg-slate-200 mt-3  "
           />
         ) : (

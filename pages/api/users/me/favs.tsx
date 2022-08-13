@@ -17,6 +17,11 @@ async function handler(
     include: {
       algorithm: {
         include: {
+          user: {
+            select: {
+              avatar: true,
+            },
+          },
           _count: {
             select: {
               favs: true,

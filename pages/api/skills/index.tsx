@@ -16,6 +16,11 @@ async function handler(
         take: +limit,
         skip: (+page - 1) * +limit,
         include: {
+          user: {
+            select: {
+              avatar: true,
+            },
+          },
           // _count 를 이용하면 좋아요의 갯수만 가져올 수 있다.
           _count: {
             select: {

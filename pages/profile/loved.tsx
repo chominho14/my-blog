@@ -6,6 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 
 interface AlgorithmWithCounts extends Algorithm {
+  user: {
+    avatar: true;
+  };
   _count: {
     favs: number;
     skillAnswers: number;
@@ -40,6 +43,7 @@ const ProfileLoved: NextPage = () => {
             subtitle={fav.algorithm.subtitle}
             comments={fav.algorithm._count.skillAnswers}
             hearts={fav.algorithm._count.favs}
+            avatar={fav.algorithm.user.avatar + ""}
           />
         ))}
       </div>
