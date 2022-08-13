@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import SkillComment from "@components/skillcomment";
 import { timeForToday } from "@components/community-answer";
+import Image from "next/image";
 
 interface SkillAnswerWithUser extends SkillAnswer {
   user: User;
@@ -121,7 +122,7 @@ const SkillDetail: NextPage = () => {
   const timeMonth = getMonthName(Number(data?.skill?.createdAt.slice(5, 7)));
 
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="AlgorithmDetail" hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5 py-10 px-4">
         <div className="flex">
           <h2 className="text-2xl w-full">{data?.skill?.title}</h2>
@@ -172,9 +173,29 @@ const SkillDetail: NextPage = () => {
             <div className="flex">
               {timeMonth}.{timeDay}.{timeYear}&nbsp;&nbsp;
               {data?.skill?.user?.name}&nbsp;&nbsp;
-              <div className="bg-gray-300 w-5 h-5 rounded-full mb-1" />
+              {data?.skill.user ? (
+                <Image
+                  width={23}
+                  height={23}
+                  src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data?.skill.user.avatar}/avatar`}
+                  className="bg-gray-300 w-5 h-5 rounded-full mb-1"
+                />
+              ) : (
+                <div className="bg-gray-300 w-6 h-6 rounded-full mb-1" />
+              )}
             </div>
           </div>
+          {data?.skill?.image != "xx" ? (
+            <div className="relative pb-80">
+              <Image
+                src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data?.skill?.image}/public`}
+                className=" bg-slate-300 object-cover"
+                layout="fill"
+              />
+            </div>
+          ) : (
+            <div />
+          )}
           <div className="py-3 text-lg">{data?.skill?.subtitle}</div>
           <p className="text-sm">{data?.skill?.explanation}</p>
         </div>
@@ -210,6 +231,7 @@ const SkillDetail: NextPage = () => {
               name={skillAnswer.user.name}
               time={timeForToday(skillAnswer.createdAt)}
               comment={skillAnswer.skillAnswer}
+              avatarUrl={skillAnswer.user.avatar + ""}
             />
           ))}
         </div>

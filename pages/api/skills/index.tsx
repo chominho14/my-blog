@@ -38,7 +38,7 @@ async function handler(
   }
   if (req.method === "POST") {
     const {
-      body: { title, subtitle, explanation },
+      body: { title, subtitle, explanation, photoId },
       session: { user },
     } = req;
     const skills = await client.algorithm.create({
@@ -46,7 +46,7 @@ async function handler(
         title,
         subtitle,
         explanation,
-        image: "xx",
+        image: photoId,
         user: {
           connect: {
             id: user?.id,

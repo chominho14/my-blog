@@ -1,6 +1,6 @@
 import client from "@libs/server/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import withHandler from "../../../libs/server/withHandler";
+import withHandler from "@libs/server/withHandler";
 import bcrypt from "bcryptjs";
 import { withApiSession } from "@libs/server/withSession";
 

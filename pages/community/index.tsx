@@ -27,10 +27,10 @@ const Community: NextPage = () => {
   );
 
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="Community" hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5">
-        <div className="bg-slate-300 py-20 flex justify-center">
-          Q & A - 개발자에게 궁금한 것
+        <div className="bg-slate-200 py-20 flex justify-center">
+          Q & A - 개발자에게 궁금한 것을 물어봐 주세요!
         </div>
         <div className="px-4 font-bold text-2xl">최신 질문</div>
         <div className="space-y-8">

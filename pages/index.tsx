@@ -21,13 +21,15 @@ interface CommunityResponse {
 }
 
 const Home: NextPage = () => {
+  const user = useMe();
+
   const { data, isLoading } = useQuery<CommunityResponse>(
     ["allPost"],
     fetchAllPost
   );
 
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="Home" hasNavBar hasTabBar hasFooter>
       <div className="px-4">
         {/* <div>
           <Link href="/search">
@@ -52,7 +54,15 @@ const Home: NextPage = () => {
             </a>
           </Link>
         </div> */}
-        <div className="h-20 w-20 bg-slate-200 mt-3  "></div>
+        {user?.avatar ? (
+          <img
+            src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/public
+                `}
+            className="h-20 w-20 bg-slate-200 mt-3  "
+          />
+        ) : (
+          <div className="h-20 w-20 bg-slate-200 mt-3  " />
+        )}
         <h1 className="text-black py-4 text-2xl">조민호의 기술블로그</h1>
         <div className="text-xl text-red-400 flex">
           <svg

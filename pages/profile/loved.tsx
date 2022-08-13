@@ -28,7 +28,7 @@ const ProfileLoved: NextPage = () => {
   console.log(data);
 
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="MyLoved" hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5">
         <div className="px-4">관심 목록</div>
         {data?.favs?.map((fav) => (

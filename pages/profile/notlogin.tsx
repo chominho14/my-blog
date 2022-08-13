@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Notlogin() {
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="notLogin" hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4 pb-72">
         <h3 className="text-3xl font-bold text-center">로그인</h3>
         <div className="mt-12">

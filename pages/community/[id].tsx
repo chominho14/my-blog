@@ -122,7 +122,7 @@ const CommunityPostDetail: NextPage = () => {
   }, [answerData, reset]);
 
   return (
-    <Layout hasTabBar hasNavBar hasFooter>
+    <Layout seoTitle="CommunityDetail" hasTabBar hasNavBar hasFooter>
       <div className="py-4 pb-20">
         <div className="flex mb-3 px-4 pb-3  border-b items-center space-x-3">
           <div className="w-10 h-10 rounded-full bg-slate-300" />

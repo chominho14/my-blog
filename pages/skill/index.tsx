@@ -46,12 +46,12 @@ const Skill: NextPage = () => {
     router.push(`${router.pathname}?page=${page + 1}&limit=${limit}`);
     setPage((prev) => prev + 1);
   };
-
+  console.log(skillData);
   return (
-    <Layout hasNavBar hasTabBar>
+    <Layout seoTitle="Algorithm" hasNavBar hasTabBar>
       <div className="flex flex-col space-y-5">
-        <div className="bg-slate-300 py-20 flex justify-center">
-          개발자가 되기 위한 노력 (사진)
+        <div className="bg-slate-200 py-20 flex justify-center">
+          코딩테스트 뿌셔보자!!!
         </div>
         <div className="px-4">전체 항목</div>
         {skillData?.skills
@@ -68,6 +68,7 @@ const Skill: NextPage = () => {
                 skill._count.skillAnswers ? skill._count.skillAnswers : 0
               }
               hearts={skill._count.favs}
+              avatar={user?.avatar}
             />
           ))}
 

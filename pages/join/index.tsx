@@ -51,7 +51,7 @@ export default function Join() {
   // const charRegExp = /[a-zA-Z]/;
   console.log(loading, data, error);
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="Join" hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4 pb-32">
         <h3 className="text-3xl font-bold text-center">회원가입</h3>
         <div className="mt-12">

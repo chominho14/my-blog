@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import Head from "next/head";
 
 interface LayoutProps {
   canGoBack?: boolean;
@@ -15,6 +16,7 @@ interface LayoutProps {
   hasFooter?: boolean;
   hasLogin?: boolean;
   children: React.ReactNode;
+  seoTitle: string;
 }
 
 interface UsersResponse {
@@ -29,6 +31,7 @@ export default function Layout({
   children,
   hasFooter,
   hasLogin,
+  seoTitle,
 }: LayoutProps) {
   const router = useRouter();
   const user = useMe();
@@ -43,6 +46,9 @@ export default function Layout({
   );
   return (
     <div>
+      <Head>
+        <title>{`${seoTitle} | Minho-Blog`}</title>
+      </Head>
       {hasNavBar ? (
         <div className="bg-whilte w-full text-lg font-medium py-3 text-gray-700 border-b top-0 flex items-center justify-between px-6">
           <Link href="/">

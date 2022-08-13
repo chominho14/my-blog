@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface SkillItemProps {
@@ -7,6 +8,7 @@ interface SkillItemProps {
   subtitle: string;
   comments: number;
   hearts: number;
+  avatar?: string;
 }
 
 export function getMonthName(month: number) {
@@ -23,6 +25,7 @@ export default function SkillItem({
   subtitle,
   comments,
   hearts,
+  avatar,
 }: SkillItemProps) {
   const timeYear = time.slice(0, 4);
   const timeDay = time.slice(8, 10);
@@ -36,7 +39,16 @@ export default function SkillItem({
             <div className="flex space-x-2 text-xs">
               <div className="flex">
                 {timeMonth}.{timeDay}.{timeYear}&nbsp;&nbsp; 조민호&nbsp;&nbsp;
-                <div className="bg-gray-300 w-5 h-5 rounded-full mb-1" />
+                {avatar ? (
+                  <Image
+                    width={23}
+                    height={23}
+                    src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${avatar}/mini`}
+                    className="bg-gray-300 w-5 h-5 rounded-full mb-1"
+                  />
+                ) : (
+                  <div className="bg-gray-300 w-6 h-6 rounded-full mb-1" />
+                )}
               </div>
             </div>
             <h2 className="text-xl font-bold text-gray-900">{title}</h2>

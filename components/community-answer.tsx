@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface SillComentProps {
   name?: string;
   answer: string;
@@ -39,7 +41,16 @@ export default function CommunityAnswers({
   const beforeTime = timeForToday(time);
   return (
     <div className="flex items-start space-x-3">
-      <div className="w-8 h-8 bg-slate-200 rounded-full" />
+      {avatarUrl ? (
+        <Image
+          width={40}
+          height={40}
+          src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${avatar}/avatar`}
+          className="bg-gray-300 w-5 h-5 rounded-full mb-1"
+        />
+      ) : (
+        <div className="w-8 h-8 bg-slate-200 rounded-full" />
+      )}
       <div>
         <span className="text-sm block font-medium text-gray-700">{name}</span>
         <p className="text-gray-700 mt-2">{answer}</p>

@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 
 interface MutationResult {
   ok: boolean;
@@ -27,6 +28,7 @@ const Profile: NextPage = () => {
     fetchUsers
   );
   console.log(userData);
+  const user = useMe();
 
   const {
     handleSubmit,
@@ -51,7 +53,7 @@ const Profile: NextPage = () => {
     }
   }, [data, router, loading, setError]);
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="MyProfile" hasNavBar hasTabBar hasFooter>
       {userData?.ok == false ? (
         <div className="mt-16 px-4 pb-72">
           <h3 className="text-3xl font-bold text-center">로그인</h3>
@@ -74,9 +76,19 @@ const Profile: NextPage = () => {
       ) : (
         <div className="py-10 px-4 pb-80">
           <div className="flex items-center space-x-3">
-            <div className="w-16 h-16 bg-slate-500 rounded-full" />
+            {user?.avatar ? (
+              <Image
+                width={48}
+                height={48}
+                src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar
+                `}
+                className=" w-16 h-16 bg-slate-500 rounded-full"
+              />
+            ) : (
+              <div className="w-16 h-16 bg-slate-500 rounded-full" />
+            )}
             <div className="flex flex-col">
-              <span className="font-medium text-gray-900">Username</span>
+              <span className="font-medium text-gray-900">{user?.name}</span>
               <Link href="/profile/edit">
                 <a className="text-sm text-gray-700">프로필 수정하기 &rarr;</a>
               </Link>

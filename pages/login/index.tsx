@@ -43,7 +43,7 @@ export default function Login() {
     }
   }, [data, router, loading, setError]);
   return (
-    <Layout hasNavBar hasTabBar hasFooter>
+    <Layout seoTitle="Login" hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4  pb-32">
         <h3 className="text-3xl font-bold text-center">로그인</h3>
         <div className="mt-12">
