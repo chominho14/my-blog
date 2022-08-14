@@ -1,5 +1,6 @@
 import Input from "@components/input";
 import Layout from "@components/layout";
+import useMe from "@libs/client/useMe";
 import useMutations from "@libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -42,6 +43,13 @@ export default function Login() {
       setError("result", { message: data?.error });
     }
   }, [data, router, loading, setError]);
+  // 임시 미들웨어
+  const user = useMe();
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+  }, [user]);
   return (
     <Layout seoTitle="Login" hasNavBar hasTabBar hasFooter>
       <div className="mt-16 px-4  pb-32">

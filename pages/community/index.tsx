@@ -2,6 +2,7 @@ import { timeForToday } from "@components/community-answer";
 import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import { fetchAllPost } from "@libs/client/api";
+import useMe from "@libs/client/useMe";
 import { Post, User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
@@ -21,11 +22,11 @@ interface CommunityResponse {
 }
 
 const Community: NextPage = () => {
+  const user = useMe();
   const { data, isLoading } = useQuery<CommunityResponse>(
     ["allPost"],
     fetchAllPost
   );
-
   return (
     <Layout seoTitle="Community" hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5">
@@ -87,23 +88,25 @@ const Community: NextPage = () => {
                 </a>
               </Link>
             ))}
-          <FloatingButton href="/community/write">
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-          </FloatingButton>
+          {user != undefined ? (
+            <FloatingButton href="/community/write">
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </FloatingButton>
+          ) : null}
         </div>
       </div>
     </Layout>

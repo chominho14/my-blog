@@ -1,4 +1,5 @@
 import Layout from "@components/layout";
+import useMe from "@libs/client/useMe";
 import useMutations from "@libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -44,6 +45,13 @@ export default function Join() {
       setError("result", { message: data?.error });
     }
   }, [data, router, getValues, setError]);
+
+  const user = useMe();
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+  }, [user]);
 
   // use-hook-form 은 error가 field하나에서 한 번에 하나씩 작동하므로 동시 처리가 불가능
   // const specialCharRegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;

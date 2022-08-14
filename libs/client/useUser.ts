@@ -4,16 +4,30 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 export default function useUser() {
-  const { data, error } = useSWR("/api/users/me");
+  const [user, setUser] = useState();
   const router = useRouter();
   useEffect(() => {
-    if (data && !data.ok) {
-      console.log("로그인하지 않은 유저");
-    }
-  }, [data, router]);
+    fetch("/api/users/me")
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data.profile);
+      });
+  }, [router]);
 
-  return { user: data?.profile, isLoading: !data && !error };
+  return user;
 }
+
+// export default function useUser() {
+//   const { data, error } = useSWR("/api/users/me");
+//   const router = useRouter();
+//   useEffect(() => {
+//     if (data && !data.ok) {
+//       console.log("로그인하지 않은 유저");
+//     }
+//   }, [data, router]);
+
+//   return { user: data?.profile, isLoading: !data && !error };
+// }
 
 // interface ProfileResponse {
 //   ok: boolean;

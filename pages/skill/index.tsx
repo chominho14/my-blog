@@ -49,7 +49,6 @@ const Skill: NextPage = () => {
     router.push(`${router.pathname}?page=${page + 1}&limit=${limit}`);
     setPage((prev) => prev + 1);
   };
-  console.log(skillData);
   return (
     <Layout seoTitle="Algorithm" hasNavBar hasTabBar>
       <div className="flex flex-col space-y-5">
