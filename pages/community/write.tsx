@@ -1,5 +1,6 @@
 import Layout from "@components/layout";
 import TextArea from "@components/textarea";
+import useMe from "@libs/client/useMe";
 import useMutations from "@libs/client/useMutation";
 import { Post } from "@prisma/client";
 import type { NextPage } from "next";
@@ -30,7 +31,6 @@ const Write: NextPage = () => {
       router.push(`/community/${data.post.id}`);
     }
   }, [data, router]);
-
   return (
     <Layout seoTitle="CommunityUpload" canGoBack>
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-10 pb">

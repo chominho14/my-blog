@@ -25,6 +25,9 @@ async function handler(
     if (!post) {
       res.status(404).json({ ok: false, error: "게시글을 만들 수 없습니다." });
     }
+
+    await res.revalidate("/community");
+
     res.json({
       ok: true,
       post,

@@ -29,4 +29,10 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
   //   if (verify) {
   //     return NextResponse.rewrite(new URL("/", url));
   //   }
+  //   console.log("req : ", req);
+  //   console.log("당신은 Bot입니까 : ", req.ua?.isBot);
+  //   console.log("req.page : ", req.page);
+  //   if (req.ua?.isBot) {
+  //     return new Response("Bot으로 접속하지 말아주세요.", { status: 403 });
+  //   }
 }

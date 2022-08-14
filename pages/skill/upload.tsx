@@ -58,6 +58,7 @@ const Upload: NextPage = () => {
       setPhotoPreview(URL.createObjectURL(file));
     }
   }, [photo]);
+
   return (
     <Layout seoTitle="SkillUpload" canGoBack>
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-6">
