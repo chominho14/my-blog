@@ -61,7 +61,8 @@ model SkillAnswer {
   algorithmId Int
   skillAnswer String    @db.MediumText
 
-  @@index([userId, algorithmId])
+  @@index([userId])
+  @@index([algorithmId])
 }
 
 model Fav {
@@ -73,7 +74,8 @@ model Fav {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  @@index([userId, algorithmId])
+  @@index([userId])
+  @@index([algorithmId])
 }
 
 model Post {
@@ -99,7 +101,8 @@ model Answer {
   postId    Int
   answer    String   @db.MediumText
 
-  @@index([userId, postId])
+  @@index([userId])
+  @@index([postId])
 }
 
 model Wondering {
@@ -111,5 +114,6 @@ model Wondering {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
 
-  @@index([userId, postId])
+  @@index([userId])
+  @@index([postId])
 }
