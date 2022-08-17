@@ -51,7 +51,7 @@ const Skill: NextPage = () => {
   };
   return (
     <Layout seoTitle="Algorithm" hasNavBar hasTabBar>
-      <div className="flex flex-col space-y-5">
+      <div className="flex flex-col space-y-5 overflow-auto">
         <div className="bg-slate-200 py-20 flex justify-center">
           코딩테스트 뿌셔보자!!!
         </div>
