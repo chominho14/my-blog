@@ -14,7 +14,8 @@ export async function fetchSkillsDetail(
   if (skillId) {
     return fetch(`/api/skills/${skillId}`).then((res) => res.json());
   } else {
-    return fetch("").then((res) => res.json());
+    //@ts-ignore
+    return fetch(null).then((res) => res.json());
   }
 }
 
@@ -22,7 +23,8 @@ export async function fetchPostDetail(postId: string | string[] | undefined) {
   if (postId) {
     return fetch(`/api/posts/${postId}`).then((res) => res.json());
   } else {
-    return fetch("").then((res) => res.json());
+    //@ts-ignore
+    return fetch(null).then((res) => res.json());
   }
 }
 

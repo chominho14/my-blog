@@ -92,9 +92,8 @@ const CommunityPostDetail: NextPage = () => {
               ...data?.post._count,
               wondering: data?.isWondering
                 ? data?.post?._count.wondering - 1
-                : data !== undefined
-                ? data?.post?._count.wondering + 1
-                : 0,
+                : //@ts-ignore
+                  data?.post?._count.wondering + 1,
             },
           },
           isWondering: !data?.isWondering,
@@ -133,7 +132,7 @@ const CommunityPostDetail: NextPage = () => {
             <Image
               width={45}
               height={45}
-              src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data.post.user.avatar}/avatar
+              src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data?.post?.user?.avatar}/avatar
                 `}
               className=" w-16 h-16 bg-slate-500 rounded-full"
             />
