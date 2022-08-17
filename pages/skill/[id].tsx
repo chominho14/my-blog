@@ -175,7 +175,7 @@ const SkillDetail: NextPage = () => {
             <div className="flex">
               {timeMonth}.{timeDay}.{timeYear}&nbsp;&nbsp;
               {data?.skill?.user?.name}&nbsp;&nbsp;
-              {data?.skill.user ? (
+              {data?.skill?.user ? (
                 <Image
                   width={23}
                   height={23}
@@ -227,7 +227,7 @@ const SkillDetail: NextPage = () => {
         </div>
         <hr />
         <div>
-          {data?.skill.skillAnswers.map((skillAnswer) => (
+          {data?.skill?.skillAnswers.map((skillAnswer) => (
             <SkillComment
               key={skillAnswer.id}
               name={skillAnswer.user.name}

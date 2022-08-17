@@ -47,7 +47,7 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
-      router.replace(`/skill/${data?.skill?.id}`);
+      router.replace(`/skill`);
     }
   }, [data, router]);
   const photo = watch("photo");
