@@ -51,7 +51,8 @@ const Profile: NextPage = () => {
     } else if (!data?.ok && data?.error) {
       setError("result", { message: data?.error });
     }
-  }, [data, router, loading, setError]);
+  }, [data, router, loading, setError, user]);
+
   return (
     <Layout seoTitle="MyProfile" hasNavBar hasTabBar hasFooter>
       {userData?.ok == false ? (

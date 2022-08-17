@@ -122,7 +122,7 @@ const CommunityPostDetail: NextPage = () => {
       reset();
       mutate();
     }
-  }, [answerData, reset]);
+  }, [answerData, reset, data]);
 
   return (
     <Layout seoTitle="CommunityDetail" hasTabBar hasNavBar hasFooter>
