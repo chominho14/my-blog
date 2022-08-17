@@ -46,10 +46,14 @@ const EditProfile: NextPage = () => {
 
   useEffect(() => {
     if (loading) return;
+    //@ts-ignore
     if (user?.email) setValue("email", user.email);
+    //@ts-ignore
     if (user?.name) setValue("name", user.name);
+    //@ts-ignore
     if (user?.avatar)
       setAvatarPreview(
+        //@ts-ignore
         `https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar`
       );
   }, [user, setValue]);

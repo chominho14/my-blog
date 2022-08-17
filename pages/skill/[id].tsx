@@ -116,8 +116,11 @@ const SkillDetail: NextPage = () => {
       mutate();
     }
   }, [skillAnswerData, reset]);
+  //@ts-ignore
   const timeYear = data?.skill?.createdAt.slice(0, 4);
+  //@ts-ignore
   const timeDay = data?.skill?.createdAt.slice(8, 10);
+  //@ts-ignore
   const timeMonth = getMonthName(Number(data?.skill?.createdAt.slice(5, 7)));
 
   return (
