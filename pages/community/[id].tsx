@@ -94,7 +94,7 @@ const CommunityPostDetail: NextPage = () => {
                 ? data?.post?._count.wondering - 1
                 : data !== undefined
                 ? data?.post?._count.wondering + 1
-                : null,
+                : 0,
             },
           },
           isWondering: !data?.isWondering,
