@@ -18,7 +18,7 @@ interface MutationResult {
 
 interface UsersResponse {
   ok: boolean;
-  user: User;
+  profile: User;
 }
 
 const Profile: NextPage = () => {
@@ -52,7 +52,7 @@ const Profile: NextPage = () => {
       setError("result", { message: data?.error });
     }
   }, [data, router, loading, setError, user]);
-
+  console.log(userData);
   return (
     <Layout seoTitle="MyProfile" hasNavBar hasTabBar hasFooter>
       {userData?.ok == false ? (
@@ -77,27 +77,20 @@ const Profile: NextPage = () => {
       ) : (
         <div className="py-10 px-4 pb-80">
           <div className="flex items-center space-x-3">
-            {
-              //@ts-ignore
-              user?.avatar ? (
-                <Image
-                  width={48}
-                  height={48}
-                  //@ts-ignore
-                  src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar
+            {userData?.profile?.avatar ? (
+              <Image
+                width={48}
+                height={48}
+                src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${userData?.profile?.avatar}/avatar
                 `}
-                  className=" w-16 h-16 bg-slate-500 rounded-full"
-                />
-              ) : (
-                <div className="w-16 h-16 bg-slate-500 rounded-full" />
-              )
-            }
+                className=" w-16 h-16 bg-slate-500 rounded-full"
+              />
+            ) : (
+              <div className="w-16 h-16 bg-slate-500 rounded-full" />
+            )}
             <div className="flex flex-col">
               <span className="font-medium text-gray-900">
-                {
-                  //@ts-ignore
-                  user?.name
-                }
+                {userData?.profile?.name}
               </span>
               <Link href="/profile/edit">
                 <a className="text-sm text-gray-700">프로필 수정하기 &rarr;</a>
