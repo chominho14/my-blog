@@ -133,8 +133,7 @@ const CommunityPostDetail: NextPage = () => {
             <Image
               width={45}
               height={45}
-              src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data?.post?.user?.avatar}/avatar
-                `}
+              src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${data?.post?.user?.avatar}/avatar`}
               className=" w-16 h-16 bg-slate-500 rounded-full"
             />
           ) : (

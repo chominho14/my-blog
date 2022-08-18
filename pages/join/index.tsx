@@ -131,7 +131,7 @@ export default function Join() {
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-6">
+            {/* <div className="grid grid-cols-2 gap-3 mt-6">
               <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:outline-none">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +162,7 @@ export default function Join() {
                 </svg>
                 깃허브로 시작하기
               </button>
-            </div>
+            </div> */}
             <div className="relative -bottom-5 text-center">
               <span className=" bg-white px-1 text-sm text-gray-500">
                 이미 계정이 있으신가요?
