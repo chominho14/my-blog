@@ -123,12 +123,13 @@ const CommunityPostDetail: NextPage = () => {
       mutate();
     }
   }, [answerData, reset, data]);
+  console.log(data);
 
   return (
     <Layout seoTitle="CommunityDetail" hasTabBar hasNavBar hasFooter>
       <div className="py-4 pb-20">
         <div className="flex mb-3 px-4 pb-3  border-b items-center space-x-3">
-          {data?.post?.user ? (
+          {data?.post?.user?.avatar ? (
             <Image
               width={45}
               height={45}
