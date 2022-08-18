@@ -8,8 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import Link from "next/link";
 
-import client from "@libs/server/client";
-
 interface PostWithUser extends Post {
   user: User;
   _count: {
@@ -19,10 +17,16 @@ interface PostWithUser extends Post {
 }
 
 interface CommunityResponse {
+  ok: boolean;
   posts: PostWithUser[];
 }
 
-const Community: NextPage<CommunityResponse> = ({ posts }) => {
+const Community: NextPage = () => {
+  const user = useMe();
+  const { data, isLoading } = useQuery<CommunityResponse>(
+    ["allPost"],
+    fetchAllPost
+  );
   return (
     <Layout seoTitle="Community" hasNavBar hasTabBar hasFooter>
       <div className="flex flex-col space-y-5">
@@ -31,7 +35,7 @@ const Community: NextPage<CommunityResponse> = ({ posts }) => {
         </div>
         <div className="px-4 font-bold text-2xl">최신 질문</div>
         <div className="space-y-8">
-          {posts
+          {data?.posts
             ?.slice(0)
             .reverse()
             .map((post) => (
@@ -61,7 +65,7 @@ const Community: NextPage<CommunityResponse> = ({ posts }) => {
                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                         ></path>
                       </svg>
-                      <span>궁금해요 {post._count?.wondering}</span>
+                      <span>궁금해요 {post._count.wondering}</span>
                     </span>
                     <span className="flex space-x-2 items-center text-sm">
                       <svg
@@ -78,13 +82,13 @@ const Community: NextPage<CommunityResponse> = ({ posts }) => {
                           d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                         ></path>
                       </svg>
-                      <span>답변 {post._count?.answers}</span>
+                      <span>답변 {post._count.answers}</span>
                     </span>
                   </div>
                 </a>
               </Link>
             ))}
-          {posts != undefined ? (
+          {user != undefined ? (
             <FloatingButton href="/community/write">
               <svg
                 className="h-6 w-6"
@@ -109,28 +113,13 @@ const Community: NextPage<CommunityResponse> = ({ posts }) => {
   );
 };
 
-export async function getStaticProps() {
-  const posts = await client.post.findMany({ include: { user: true } });
-  return {
-    props: {
-      posts: JSON.parse(JSON.stringify(posts)),
-    },
-  };
-}
-
 export default Community;
 
 // interface CommunityResponse {
-//   ok: boolean;
 //   posts: PostWithUser[];
 // }
 
-// const Community: NextPage = () => {
-//   const user = useMe();
-//   const { data, isLoading } = useQuery<CommunityResponse>(
-//     ["allPost"],
-//     fetchAllPost
-//   );
+// const Community: NextPage<CommunityResponse> = ({ posts }) => {
 //   return (
 //     <Layout seoTitle="Community" hasNavBar hasTabBar hasFooter>
 //       <div className="flex flex-col space-y-5">
@@ -139,7 +128,7 @@ export default Community;
 //         </div>
 //         <div className="px-4 font-bold text-2xl">최신 질문</div>
 //         <div className="space-y-8">
-//           {data?.posts
+//           {posts
 //             ?.slice(0)
 //             .reverse()
 //             .map((post) => (
@@ -169,7 +158,7 @@ export default Community;
 //                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
 //                         ></path>
 //                       </svg>
-//                       <span>궁금해요 {post._count.wondering}</span>
+//                       <span>궁금해요 {post._count?.wondering}</span>
 //                     </span>
 //                     <span className="flex space-x-2 items-center text-sm">
 //                       <svg
@@ -186,13 +175,13 @@ export default Community;
 //                           d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
 //                         ></path>
 //                       </svg>
-//                       <span>답변 {post._count.answers}</span>
+//                       <span>답변 {post._count?.answers}</span>
 //                     </span>
 //                   </div>
 //                 </a>
 //               </Link>
 //             ))}
-//           {user != undefined ? (
+//           {posts != undefined ? (
 //             <FloatingButton href="/community/write">
 //               <svg
 //                 className="h-6 w-6"
@@ -216,3 +205,13 @@ export default Community;
 //     </Layout>
 //   );
 // };
+
+// export async function getStaticProps() {
+//   const posts = await client.post.findMany({ include: { user: true } });
+//   return {
+//     props: {
+//       posts: JSON.parse(JSON.stringify(posts)),
+//     },
+//     revalidate: 5,
+//   };
+// }
