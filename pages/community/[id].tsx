@@ -1,6 +1,6 @@
 import CommunityAnswers from "@components/community-answer";
 import Layout from "@components/layout";
-import { fetchPostDetail } from "@libs/client/api";
+import { fetchPostDetail, fetchUsers } from "@libs/client/api";
 import useMutations from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { Answer, Post, User } from "@prisma/client";
@@ -40,6 +40,11 @@ interface AnswerResponse {
   response: Answer;
 }
 
+interface UsersResponse {
+  ok: boolean;
+  profile: User;
+}
+
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
   const postId = router.query.id;
@@ -50,6 +55,10 @@ const CommunityPostDetail: NextPage = () => {
     ["postDetail", postId],
     () => fetchPostDetail(postId)
   );
+
+  const { data: userData } = useQuery<UsersResponse>(["users"], fetchUsers);
+  console.log(userData);
+
   // 궁금해요 Post 요청을 보내기 위한 useMutations
   const [wonder, { loading }] = useMutations(`/api/posts/${postId}/wonder`);
   // qustions에 answer을 보내기 위한 mutations
@@ -57,6 +66,9 @@ const CommunityPostDetail: NextPage = () => {
     useMutations<AnswerResponse>(`/api/posts/${postId}/answers`);
 
   const onWonderClick = () => {
+    if (!userData?.ok) {
+      return alert("로그인을 해주세요.");
+    }
     if (!data) return;
     mutate();
     if (!loading) {
@@ -113,6 +125,10 @@ const CommunityPostDetail: NextPage = () => {
 
   // 댓글에 대한 onValid
   const onValid = (form: AnswerForm) => {
+    if (!userData?.ok) {
+      reset();
+      return alert("로그인을 해주세요.");
+    }
     if (answerLoading) return;
     sendAnswer(form);
   };

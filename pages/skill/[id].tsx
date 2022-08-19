@@ -1,6 +1,6 @@
 import Layout from "@components/layout";
 import { getMonthName } from "@components/skill-item";
-import { fetchSkillsDetail } from "@libs/client/api";
+import { fetchSkillsDetail, fetchUsers } from "@libs/client/api";
 import useMutations from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { Algorithm, SkillAnswer, User } from "@prisma/client";
@@ -42,9 +42,16 @@ interface SkillAnswerResponse {
   response: SkillAnswer;
 }
 
+interface UsersResponse {
+  ok: boolean;
+  profile: User;
+}
+
 const SkillDetail: NextPage = () => {
   const router = useRouter();
   const skillID = router.query.id;
+  const { data: userData } = useQuery<UsersResponse>(["users"], fetchUsers);
+  console.log(userData);
 
   const { register, handleSubmit, reset } = useForm<SkillAnswerForm>();
 
@@ -62,6 +69,10 @@ const SkillDetail: NextPage = () => {
   ] = useMutations<SkillAnswerResponse>(`/api/skills/${skillID}/skillanswers`);
 
   const onFavClick = () => {
+    if (!userData?.ok) {
+      reset();
+      return alert("로그인을 해주세요.");
+    }
     if (!data) return;
     mutate();
     if (!loading) {
@@ -106,6 +117,10 @@ const SkillDetail: NextPage = () => {
 
   // 댓글에 대한 onValid
   const onValid = (form: SkillAnswerForm) => {
+    if (!userData?.ok) {
+      reset();
+      return alert("로그인을 해주세요.");
+    }
     if (skillAnswerLoading) return;
     sendSkillAnswer(form);
   };
