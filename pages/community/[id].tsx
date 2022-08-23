@@ -80,10 +80,6 @@ const CommunityPostDetail: NextPage = () => {
     }, 100);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [data]);
-
   // 궁금해요 Optimistic UI 구현
   const queryClient = useQueryClient();
   const { mutate } = useMutation<CommunityPostResponse>(
