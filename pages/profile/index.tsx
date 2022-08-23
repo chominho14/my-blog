@@ -43,12 +43,9 @@ const Profile: NextPage = () => {
   const onValid = (data: any) => {
     if (loading) return;
     logout(data);
-    router.reload();
+    // router.reload();
+    router.push("/login");
   };
-
-  useEffect(() => {
-    refetch();
-  }, [data]);
 
   useEffect(() => {
     if (data?.ok) {
@@ -58,9 +55,10 @@ const Profile: NextPage = () => {
     }
   }, [data, router, loading, setError, user]);
   console.log(userData);
+  console.log(user);
   return (
     <Layout seoTitle="MyProfile" hasNavBar hasTabBar hasFooter>
-      {userData?.ok == false ? (
+      {!userData?.ok ? (
         <div className="mt-16 px-4 pb-72">
           <h3 className="text-3xl font-bold text-center">로그인</h3>
           <div className="mt-12">
