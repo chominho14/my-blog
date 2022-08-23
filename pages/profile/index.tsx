@@ -23,10 +23,11 @@ interface UsersResponse {
 
 const Profile: NextPage = () => {
   const router = useRouter();
-  const { isLoading, data: userData } = useQuery<UsersResponse>(
-    ["users"],
-    fetchUsers
-  );
+  const {
+    isLoading,
+    data: userData,
+    refetch,
+  } = useQuery<UsersResponse>(["users"], fetchUsers);
   console.log(userData);
   const user = useMe();
 
@@ -44,6 +45,10 @@ const Profile: NextPage = () => {
     logout(data);
     router.reload();
   };
+
+  useEffect(() => {
+    refetch();
+  }, [userData]);
 
   useEffect(() => {
     if (data?.ok) {

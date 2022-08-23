@@ -5,7 +5,7 @@ import { cls } from "@libs/client/utils";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 
@@ -40,10 +40,14 @@ export default function Layout({
   };
   const user2 = useUser();
 
-  const { isLoading, data: userData } = useQuery<UsersResponse>(
-    ["users"],
-    fetchUsers
-  );
+  const {
+    isLoading,
+    data: userData,
+    refetch,
+  } = useQuery<UsersResponse>(["users"], fetchUsers);
+  useEffect(() => {
+    refetch();
+  }, [userData]);
   return (
     <div>
       <Head>
