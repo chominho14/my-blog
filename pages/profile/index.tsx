@@ -44,7 +44,7 @@ const Profile: NextPage = () => {
     if (loading) return;
     logout(data);
     // router.reload();
-    router.push("/login");
+    router.push("/");
   };
 
   useEffect(() => {
