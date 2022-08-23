@@ -48,7 +48,7 @@ const Profile: NextPage = () => {
 
   useEffect(() => {
     refetch();
-  }, [userData]);
+  }, [data]);
 
   useEffect(() => {
     if (data?.ok) {
