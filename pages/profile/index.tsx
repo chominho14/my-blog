@@ -28,7 +28,6 @@ const Profile: NextPage = () => {
     data: userData,
     refetch,
   } = useQuery<UsersResponse>(["users"], fetchUsers);
-  console.log(userData);
   const user = useMe();
 
   const {
@@ -54,8 +53,6 @@ const Profile: NextPage = () => {
       setError("result", { message: data?.error });
     }
   }, [data, router, loading, setError, user]);
-  console.log(userData);
-  console.log(user);
   return (
     <Layout seoTitle="MyProfile" hasNavBar hasTabBar hasFooter>
       {!userData?.ok ? (

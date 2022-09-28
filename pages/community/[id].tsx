@@ -57,7 +57,6 @@ const CommunityPostDetail: NextPage = () => {
   );
 
   const { data: userData } = useQuery<UsersResponse>(["users"], fetchUsers);
-  console.log(userData);
 
   // 궁금해요 Post 요청을 보내기 위한 useMutations
   const [wonder, { loading }] = useMutations(`/api/posts/${postId}/wonder`);

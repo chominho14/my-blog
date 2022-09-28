@@ -51,7 +51,6 @@ const SkillDetail: NextPage = () => {
   const router = useRouter();
   const skillID = router.query.id;
   const { data: userData } = useQuery<UsersResponse>(["users"], fetchUsers);
-  console.log(userData);
 
   const { register, handleSubmit, reset } = useForm<SkillAnswerForm>();
 
