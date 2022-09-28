@@ -6,7 +6,7 @@ import { User } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -35,6 +35,7 @@ const Profile: NextPage = () => {
   const [logout, { loading, error, data }] =
     useMutation<MutationResult>("/api/users/logout");
 
+  const [avatarView, setAvatarView] = useState("");
   const onValid = (data: any) => {
     if (loading) return;
     logout(data);
@@ -44,6 +45,13 @@ const Profile: NextPage = () => {
   useEffect(() => {
     if (data?.ok) {
       if (loading) return;
+      //@ts-ignore
+      if (user?.avatar) {
+        setAvatarView(
+          //@ts-ignore
+          `https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar`
+        );
+      }
     } else if (!data?.ok && data?.error) {
       setError("result", { message: data?.error });
     }
@@ -72,11 +80,21 @@ const Profile: NextPage = () => {
       ) : (
         <div className="py-10 px-4 pb-80">
           <div className="flex items-center space-x-3">
-            {userData?.profile?.avatar ? (
+            {/* {userData?.profile?.avatar ? (
               <Image
                 width={48}
                 height={48}
                 src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${userData?.profile?.avatar}/avatar`}
+                className=" w-16 h-16 bg-slate-500 rounded-full"
+              />
+            ) : (
+              <div className="w-16 h-16 bg-slate-500 rounded-full" />
+            )} */}
+            {avatarView ? (
+              <Image
+                width={48}
+                height={48}
+                src={avatarView}
                 className=" w-16 h-16 bg-slate-500 rounded-full"
               />
             ) : (
