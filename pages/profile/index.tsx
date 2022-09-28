@@ -45,17 +45,20 @@ const Profile: NextPage = () => {
   useEffect(() => {
     if (data?.ok) {
       if (loading) return;
-      //@ts-ignore
-      if (user?.avatar) {
-        setAvatarView(
-          //@ts-ignore
-          `https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar`
-        );
-      }
     } else if (!data?.ok && data?.error) {
       setError("result", { message: data?.error });
     }
-  }, [data, router, loading, setError, user]);
+  }, [data, router, loading, setError]);
+
+  useEffect(() => {
+    //@ts-ignore
+    if (user?.avatar) {
+      setAvatarView(
+        //@ts-ignore
+        `https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar`
+      );
+    }
+  }, [user]);
   return (
     <Layout seoTitle="MyProfile" hasNavBar hasTabBar hasFooter>
       {!userData?.ok ? (
