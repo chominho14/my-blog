@@ -57,7 +57,6 @@ const EditProfile: NextPage = () => {
         `https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${user?.avatar}/avatar`
       );
   }, [user, setValue]);
-  console.log(userData);
   const [editProfile, { data, loading }] =
     useMutations<EditProfileResponse>(`/api/users/me`);
 

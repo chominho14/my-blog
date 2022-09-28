@@ -23,11 +23,7 @@ interface UsersResponse {
 
 const Profile: NextPage = () => {
   const router = useRouter();
-  const {
-    isLoading,
-    data: userData,
-    refetch,
-  } = useQuery<UsersResponse>(["users"], fetchUsers);
+  const { data: userData } = useQuery<UsersResponse>(["users"], fetchUsers);
   const user = useMe();
 
   const {
@@ -45,7 +41,6 @@ const Profile: NextPage = () => {
     // router.reload();
     router.push("/");
   };
-
   useEffect(() => {
     if (data?.ok) {
       if (loading) return;
@@ -77,16 +72,15 @@ const Profile: NextPage = () => {
       ) : (
         <div className="py-10 px-4 pb-80">
           <div className="flex items-center space-x-3">
-            {!userData?.profile?.avatar ? (
-              <div className="w-16 h-16 bg-slate-500 rounded-full" />
-            ) : (
+            {userData?.profile?.avatar ? (
               <Image
                 width={48}
                 height={48}
-                src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${userData?.profile?.avatar}/avatar
-              `}
+                src={`https://imagedelivery.net/gW7iMYc8PRF7ooz9ysBNKw/${userData?.profile?.avatar}/avatar`}
                 className=" w-16 h-16 bg-slate-500 rounded-full"
               />
+            ) : (
+              <div className="w-16 h-16 bg-slate-500 rounded-full" />
             )}
             <div className="flex flex-col">
               <span className="font-medium text-gray-900">
