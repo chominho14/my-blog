@@ -213,9 +213,7 @@ const SkillDetail: NextPage = () => {
             <div />
           )}
           <div className="py-3 text-lg">{data?.skill?.subtitle}</div>
-          <p className="text-sm whitespace-pre-line	">
-            {data?.skill?.explanation}
-          </p>
+          <p className="text-sm whitespace-pre">{data?.skill?.explanation}</p>
         </div>
         <div className="py-4">
           <div className="py-3 text-sm font-bold">
