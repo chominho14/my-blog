@@ -53,7 +53,7 @@ const Skill: NextPage = () => {
     <Layout seoTitle="Algorithm" hasNavBar hasTabBar>
       <div className="flex flex-col space-y-5 overflow-auto pb-14">
         <div className="bg-slate-200 py-20 flex justify-center">
-          코딩테스트 뿌셔보자!!!
+          코딩테스트, CS 공부
         </div>
         <div className="px-4">전체 항목</div>
         {skillData?.skills
